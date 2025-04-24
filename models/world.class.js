@@ -9,6 +9,13 @@ class World{
         new GodRays()
     ];
 
+    backroundObjects = [
+        new BackroundObject('img/3. Background/Layers/5. Water/D1.png', 0),
+        new BackroundObject('img/3. Background/Layers/4.Fondo 2/D1.png', 0),
+        new BackroundObject('img/3. Background/Layers/3.Fondo 1/D1.png', 0),
+        new BackroundObject('img/3. Background/Layers/2. Floor/D1.png', 0),
+    ]
+
     canvas;
     ctx;
 
@@ -20,18 +27,11 @@ class World{
 
     draw(){
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleart
-        this.ctx.drawImage(this.charackter.img, this.charackter.x, this.charackter.y, this.charackter.height, this.charackter.width);
-        this.enemies.forEach(enemy => { // forEach sorgt für jedes Element innerhalb eines Ararys. In diesem Falle dem "enemies"
-            this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.height, enemy.width);
-            
-            
-        });
-
-        this.godRays.forEach(godRay => { // forEach sorgt für jedes Element innerhalb eines Ararys. In diesem Falle dem "enemies"
-            this.ctx.drawImage(godRay.img, godRay.x, godRay.y, godRay.height, godRay.width);
-            
-            
-        });
+        this.addObjectsToMap(this.backroundObjects);
+        this.addObjectsToMap(this.godRays);
+        this.addToMap(this.charackter);
+        this.addObjectsToMap(this.enemies);
+        
 
         // draw() wird immer wieder aufgerufen
         let self = this; // wir müssen this in der waribale self speicher, da this in "requestAnimationFrame" nicht mehr funktioniert?
@@ -39,4 +39,15 @@ class World{
             self.draw();
         });
     }
+
+    addObjectsToMap(objects){
+        objects.forEach(o => {
+            this.addToMap(o)
+        });
+    };
+
+    addToMap(mo){
+        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+
+    };
 }
