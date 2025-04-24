@@ -29,8 +29,9 @@ class World{
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleart
         this.addObjectsToMap(this.backroundObjects);
         this.addObjectsToMap(this.godRays);
-        this.addToMap(this.charackter);
         this.addObjectsToMap(this.enemies);
+        this.addToMap(this.charackter);
+        
         
 
         // draw() wird immer wieder aufgerufen

@@ -5,6 +5,8 @@ class MovableObject{
     width = 150;
     height = 150;
     imageCash = {};
+    currentImage = 0;
+    speed = 0.3;
     
 
     loadImage(path){
@@ -31,6 +33,8 @@ class MovableObject{
     }
 
     moveLeft(){
-        
+        setInterval(() => {
+            this.x -= this.speed;
+        }, 1000 / 60);
     }
 }
