@@ -4,6 +4,10 @@ class MovableObject{
     img;
 
     moveRight() {
-        console.log('...moved th the right...')
+        console.log('...moved in the right...')
+    }
+
+    moveLeft(){
+        
     }
 }
