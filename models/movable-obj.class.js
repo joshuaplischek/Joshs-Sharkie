@@ -6,7 +6,6 @@ class MovableObject{
     height = 150;
     imageCash = {};
     currentImage = 0;
-    currentLoopPos = 0;
     speed = 0.3;
     otherDirection = false;
     

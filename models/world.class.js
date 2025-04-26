@@ -10,12 +10,23 @@ class World{
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.character = new Character();
         this.draw();
+        this.connectCharactertoEnemies();
         this.setWorld();
+        this.charackter.animate();
     }
 
     setWorld(){
         this.charackter.world = this;
+    }
+
+    connectCharactertoEnemies(){
+        this.level.enemies.forEach(enemy => {
+            if (enemy instanceof Endboss) {
+                enemy.character = this.character;
+            }
+        });
     }
 
     draw(){
@@ -25,6 +36,13 @@ class World{
         this.addObjectsToMap(this.level.godRays);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.charackter);
+
+        this.level.enemies.forEach(enemy => {
+            if (enemy instanceof Endboss) {
+                enemy.checkCharacterPosition(this.charackter);
+            }
+        });
+
         this.ctx.translate(-this.camera_x, 0);
 
         // draw() wird immer wieder aufgerufen
