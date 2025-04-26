@@ -1,24 +1,10 @@
 class World{
     charackter = new Character();
-    enemies = [
-    new BlubbFish(),
-    new BlubbFish(),
-    new BlubbFish(),
-];
-    godRays = [
-        new GodRays()
-    ];
-
-    backroundObjects = [
-        new BackroundObject('img/3. Background/Layers/5. Water/D1.png', 0),
-        new BackroundObject('img/3. Background/Layers/4.Fondo 2/D1.png', 0),
-        new BackroundObject('img/3. Background/Layers/3.Fondo 1/D1.png', 0),
-        new BackroundObject('img/3. Background/Layers/2. Floor/D1.png', 0),
-    ]
-
+    level = level1
     canvas;
     ctx;
     keyboard;
+    camera_x = 0;
 
     constructor(canvas, keyboard){
         this.ctx = canvas.getContext('2d');
@@ -34,12 +20,12 @@ class World{
 
     draw(){
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleart
-        this.addObjectsToMap(this.backroundObjects);
-        this.addObjectsToMap(this.godRays);
-        this.addObjectsToMap(this.enemies);
+        this.ctx.translate(this.camera_x, 0);
+        this.addObjectsToMap(this.level.backroundObjects);
+        this.addObjectsToMap(this.level.godRays);
+        this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.charackter);
-        
-        
+        this.ctx.translate(-this.camera_x, 0);
 
         // draw() wird immer wieder aufgerufen
         let self = this; // wir müssen this in der waribale self speicher, da this in "requestAnimationFrame" nicht mehr funktioniert?
