@@ -1,4 +1,8 @@
-class EndBoss extends MovableObject{
+class Endboss extends MovableObject{
+
+    width = 500;
+    height = 500;
+    y = -50;
 
     IMAGES_SPAWN = [
         'img/2.Enemy/3 Final Enemy/1.Introduce/1.png',
@@ -54,8 +58,15 @@ class EndBoss extends MovableObject{
      ];
 
      constructor(){
-        super().loadImages(this.IMAGES_SPAWN[0]);
-        this.loadImages(this.IMAGES_SPAWN)
-        this.x = 700;
+        super().loadImage(this.IMAGES_FLOATING[0]);
+        this.loadImages(this.IMAGES_FLOATING)
+        this.x = 720 * 5;
+        this.animate()
+     }
+
+     animate(){
+        setInterval(() => {
+            this.playAnimation(this.IMAGES_FLOATING)
+        }, 150);
      }
 }

@@ -1,9 +1,30 @@
 const level1 = new Level(
     [
-    new BlubbFish(),
-    new BlubbFish(),
-    new BlubbFish(),
-
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+        new BlubbFish(),
+    new Endboss()
 ],
 [
     new GodRays()

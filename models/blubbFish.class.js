@@ -11,12 +11,11 @@ class BlubbFish extends MovableObject{
         'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim5.png'
     ];
 
-    
-
     constructor(){
         super().loadImage('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadImages(this.IMAGES_SWIMMING_ENEMIES)
-        this.x = 250 + Math.random() * 500;
+        this.x = 400 + Math.random() * 720 * 5;
+        this.y = Math.random() * 500;
         this.speed = 0.3 + Math.random() * 0.5;
         this.animate();
     }
