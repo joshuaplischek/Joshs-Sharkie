@@ -27,15 +27,22 @@ class MovableObject{
             this.imageCash[path] = img;   
         });
 
-    }
+    };
+
+    playAnimation(image){
+        let i = this.currentImage % image.length;
+        let path = image[i];
+        this.img = this.imageCash[path];
+        this.currentImage++;
+    };
 
     moveRight() {
         console.log('...moved in the right...')
-    }
+    };
 
     moveLeft(){
         setInterval(() => {
             this.x -= this.speed;
         }, 1000 / 60);
-    }
+    };
 }

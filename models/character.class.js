@@ -71,15 +71,9 @@ class Character extends MovableObject{
             if (this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.LEFT || this.world.keyboard.DOWN) {
                     
                 //swimming animation
-                let i = this.currentImage % this.IMAGES_SWIMMING_FORWARD.length;
-                let path = this.IMAGES_SWIMMING_FORWARD[i];
-                this.img = this.imageCash[path];
-                this.currentImage++;
+                this.playAnimation(this.IMAGES_SWIMMING_FORWARD)
             }else{ //standing
-                let i = this.currentImage % this.IMAGES_SWIMMING.length;
-                let path = this.IMAGES_SWIMMING[i];
-                this.img = this.imageCash[path];
-                this.currentImage++;
+                this.playAnimation(this.IMAGES_SWIMMING)
             }
             }, 150);
 

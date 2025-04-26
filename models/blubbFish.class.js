@@ -23,10 +23,7 @@ class BlubbFish extends MovableObject{
 
     animate(){
         setInterval(() => {
-            let i = this.currentImage % this.IMAGES_SWIMMING_ENEMIES.length;
-            let path = this.IMAGES_SWIMMING_ENEMIES[i];
-            this.img = this.imageCash[path];
-            this.currentImage++; 
+            this.playAnimation(this.IMAGES_SWIMMING_ENEMIES);
         }, 150);
 
         this.moveLeft()
