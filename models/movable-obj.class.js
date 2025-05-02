@@ -45,12 +45,12 @@ class MovableObject{
         this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
-        }
-    }
+        };
+    };
 
     isDead(){
         return this.energy == 0;
-    }
+    };
 
     draw(ctx){
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);

@@ -49,12 +49,28 @@ class Character extends MovableObject{
         'img/1.Sharkie/6.dead/1.Poisoned/12.png',
     ];
 
+    IMAGES_HURT_BY_BLUBBFISH = [
+        'img/1.Sharkie/5.Hurt/1.Poisoned/1.png',
+        'img/1.Sharkie/5.Hurt/1.Poisoned/2.png',
+        'img/1.Sharkie/5.Hurt/1.Poisoned/3.png',
+        'img/1.Sharkie/5.Hurt/1.Poisoned/4.png',
+        'img/1.Sharkie/5.Hurt/1.Poisoned/5.png',
+    ];
+
+    IMAGES_HURT_BY_JELLYFISH = [
+        'img/1.Sharkie/5.Hurt/2.Electric shock/1.png',
+        'img/1.Sharkie/5.Hurt/2.Electric shock/2.png',
+        'img/1.Sharkie/5.Hurt/2.Electric shock/3.png',
+    ];
+
     world;
 
     constructor(){
         super().loadImage('img/1.Sharkie/1.IDLE/1.png');
         this.loadImages(this.IMAGES_SWIMMING);
         this.loadImages(this.IMAGES_SWIMMING_FORWARD)
+        this.loadImages(this.IMAGES_HURT_BY_JELLYFISH)
+        this.loadImages(this.IMAGES_HURT_BY_BLUBBFISH)
         this.loadImages(this.IMAGES_DEAD)
     }
 
@@ -82,18 +98,14 @@ class Character extends MovableObject{
         }, 1000/60);
         
         setInterval(() => {
-            if (this.isDead == 0) {
+            if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD)
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.LEFT || this.world.keyboard.DOWN) {
-                    
-                //swimming animation
                 this.playAnimation(this.IMAGES_SWIMMING_FORWARD)
-            }else{ //standing
+            }else{
                 this.playAnimation(this.IMAGES_SWIMMING)
             }
             }, 150);
-
-
     }
 
     jump(){
