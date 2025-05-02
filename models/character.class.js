@@ -1,4 +1,4 @@
-class Character extends MovableObject{
+class Character extends MovableObject {
 
     width = 200;
     height = 200;
@@ -65,7 +65,7 @@ class Character extends MovableObject{
 
     world;
 
-    constructor(){
+    constructor() {
         super().loadImage('img/1.Sharkie/1.IDLE/1.png');
         this.loadImages(this.IMAGES_SWIMMING);
         this.loadImages(this.IMAGES_SWIMMING_FORWARD)
@@ -74,7 +74,7 @@ class Character extends MovableObject{
         this.loadImages(this.IMAGES_DEAD)
     }
 
-    animate(){
+    animate() {
 
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -94,21 +94,23 @@ class Character extends MovableObject{
             if (this.world.keyboard.DOWN && 280 > this.y) {
                 this.y += this.speed;
             }
-            this.world.camera_x = -this.x +100;
-        }, 1000/60);
-        
+            this.world.camera_x = -this.x + 100;
+        }, 1000 / 60);
+
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD)
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH)
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.LEFT || this.world.keyboard.DOWN) {
                 this.playAnimation(this.IMAGES_SWIMMING_FORWARD)
-            }else{
+            } else {
                 this.playAnimation(this.IMAGES_SWIMMING)
             }
-            }, 150);
+        }, 150);
     }
 
-    jump(){
+    jump() {
 
     }
 }
