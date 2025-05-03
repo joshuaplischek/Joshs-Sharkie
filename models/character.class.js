@@ -98,8 +98,9 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.isDead()) {
+            if (this.isDead() && this.deathCounter <= 12) {
                 this.playAnimation(this.IMAGES_DEAD)
+                this.deathCounter++;
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH)
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.LEFT || this.world.keyboard.DOWN) {

@@ -3,6 +3,8 @@ class MovableObject extends DawableObject {
     otherDirection = false;
     energy = 100;
     lastHit = 0;
+    deathCounter = 0;
+
     /**
      * 
      * @param {Array} arr - [...] 
@@ -12,6 +14,15 @@ class MovableObject extends DawableObject {
         let path = image[i];
         this.img = this.imageCash[path];
         this.currentImage++;
+    };
+
+    playOneTimeAnimation(image) {
+        if (this.currentImage < image.length) {
+            let i = this.currentImage;
+            let path = image[i];
+            this.img = this.imageCash[path];
+            this.currentImage++;
+        }
     };
 
     hit() {
