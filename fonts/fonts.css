@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Sharkie';
+    src: url('./Luckiest_Guy/LuckiestGuy-Regular.ttf') format('truetype');
+}
+
+body{
+    font-family: 'Sharkie';
+}

@@ -16,12 +16,15 @@ class MovableObject extends DawableObject {
         this.currentImage++;
     };
 
-    playOneTimeAnimation(image) {
-        if (this.currentImage < image.length) {
-            let i = this.currentImage;
+    playOneTimeDeadAnimation(image) {
+        if (this.deathCounter == image.length - 1) {
+            this.loadImage('img/1.Sharkie/6.dead/1.Poisoned/12.png');
+        } else {
+            let i = this.deathCounter % image.length;
             let path = image[i];
             this.img = this.imageCash[path];
             this.currentImage++;
+            this.deathCounter++;
         }
     };
 
@@ -56,4 +59,5 @@ class MovableObject extends DawableObject {
             this.x -= this.speed;
         }, 1000 / 60);
     };
+
 }

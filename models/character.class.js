@@ -1,5 +1,4 @@
 class Character extends MovableObject {
-
     width = 200;
     height = 200;
     y = 150;
@@ -63,6 +62,17 @@ class Character extends MovableObject {
         'img/1.Sharkie/5.Hurt/2.Electric shock/3.png',
     ];
 
+    IMAGES_SHOOTING_BUBBLE = [
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/4.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/5.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/6.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png',
+    ];
+
     world;
 
     constructor() {
@@ -71,6 +81,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_SWIMMING_FORWARD)
         this.loadImages(this.IMAGES_HURT_BY_JELLYFISH)
         this.loadImages(this.IMAGES_HURT_BY_BLUBBFISH)
+        this.loadImages(this.IMAGES_SHOOTING_BUBBLE)
         this.loadImages(this.IMAGES_DEAD)
     }
 
@@ -98,20 +109,18 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.isDead() && this.deathCounter <= 12) {
-                this.playAnimation(this.IMAGES_DEAD)
-                this.deathCounter++;
+            if (this.isDead()) {
+                this.playOneTimeDeadAnimation(this.IMAGES_DEAD)
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH)
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.LEFT || this.world.keyboard.DOWN) {
                 this.playAnimation(this.IMAGES_SWIMMING_FORWARD)
+            } else if (this.world.keyboard.D) {
+                this.playAnimation(this.IMAGES_SHOOTING_BUBBLE)
             } else {
                 this.playAnimation(this.IMAGES_SWIMMING)
             }
         }, 150);
     }
 
-    jump() {
-
-    }
 }
