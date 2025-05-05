@@ -1,4 +1,4 @@
-class DawableObject {
+class DrawableObject {
     img;
     imageCash = {};
     currentImage = 0;
@@ -6,6 +6,17 @@ class DawableObject {
     y = 250;
     width = 150;
     height = 150;
+    offset = {
+        top: 90,
+        right: 35,
+        bottom: 40,
+        left: 40,
+    };
+
+    rX;
+    rY;
+    rW;
+    rH;
 
     loadImage(path) {
         this.img = new Image(); // this.img ist das gleiche wie document.get...Id("...")
@@ -24,8 +35,27 @@ class DawableObject {
         });
     };
 
+    getRealFrame() {
+        this.rX = this.x + this.offset.left;
+        this.rY = this.y + this.offset.top;
+        this.rW = this.width - this.offset.left - this.offset.right;
+        this.rH = this.height - this.offset.top - this.offset.bottom;
+    }
+
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof BlubbFish) {
+        if (this instanceof Character) {
+            ctx.beginPath();
+            ctx.lineWidth = "5";
+            ctx.strokeStyle = "blue";
+            ctx.rect(
+                this.x + this.offset.left,
+                this.y + this.offset.top,
+                this.width - this.offset.left - this.offset.right,
+                this.height - this.offset.top - this.offset.bottom);
+            ctx.stroke();
+        }
+
+        if (this instanceof BlubbFish) {
             ctx.beginPath();
             ctx.lineWidth = "5";
             ctx.strokeStyle = "blue";

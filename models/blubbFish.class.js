@@ -18,6 +18,7 @@ class BlubbFish extends MovableObject{
         this.y = Math.random() * 500;
         this.speed = 0.3 + Math.random() * 0.5;
         this.animate();
+        this.getRealFrame()
     }
 
     animate(){

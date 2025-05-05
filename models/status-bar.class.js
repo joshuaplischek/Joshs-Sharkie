@@ -1,4 +1,4 @@
-class StatusBar extends DawableObject {
+class StatusBar extends DrawableObject {
     IMAGES = [
         'img/4. Marcadores/green/Life/0_life-points.png',
         'img/4. Marcadores/green/Life/20_life-points.png',

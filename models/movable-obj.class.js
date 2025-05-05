@@ -1,4 +1,4 @@
-class MovableObject extends DawableObject {
+class MovableObject extends DrawableObject {
     speed = 0.3;
     otherDirection = false;
     energy = 100;
@@ -48,10 +48,10 @@ class MovableObject extends DawableObject {
     };
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height
+        return this.rX + this.rW > mo.rX &&
+            this.rY + this.rH > mo.rY &&
+            this.rX < mo.rX &&
+            this.rY < mo.rY + mo.rH
     }
 
     moveLeft() {

@@ -12,11 +12,11 @@ class World {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
-    this.character = new Character();
     this.draw();
     this.connectCharactertoEnemies();
     this.setWorld();
     this.charackter.animate();
+    this.charackter.getRealFrame()
     this.run();
   }
 
@@ -77,7 +77,7 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
 
     // draw() wird immer wieder aufgerufen
-    let self = this; // wir müssen this in der waribale self speicher, da this in "requestAnimationFrame" nicht mehr funktioniert?
+    let self = this; // wir müssen this in der varibale self speichern, da this in "requestAnimationFrame" nicht mehr funktioniert?
     requestAnimationFrame(function () {
       self.draw();
     });
