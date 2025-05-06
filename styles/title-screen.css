@@ -1,0 +1,47 @@
+#titleScreen{
+    width: 720px;
+    height: 480px;
+    z-index: 5;
+    background-image: url('../img/3. Background/Layers/5. Water/D2.png');
+    background-size: cover;
+    object-fit: cover;
+}
+
+.barriers{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-image: url('../img/3. Background/Barrier/1.png');
+}
+
+.start-button-container{
+    text-align: center;
+    width: 100%;
+}
+
+#startButton{
+    width: 200px;
+}
+
+#startButton:hover{
+    cursor: pointer;
+}
+.titlescreen-images{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 200px;
+}
+
+.sharkie img{
+    height: 150px;
+}
+
+.blubbfish img{
+    height: 100px;
+}
