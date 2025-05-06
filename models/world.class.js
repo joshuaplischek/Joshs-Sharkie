@@ -16,7 +16,7 @@ class World {
     this.connectCharactertoEnemies();
     this.setWorld();
     this.charackter.animate();
-    this.charackter.getRealFrame()
+    this.charackter.getRealFrame();
     this.run();
   }
 

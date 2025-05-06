@@ -3,6 +3,17 @@ class Character extends MovableObject {
     height = 200;
     y = 150;
     speed = 7
+    offset = {
+        top: 90,
+        right: 35,
+        bottom: 40,
+        left: 40,
+    };
+
+    rX;
+    rY;
+    rW;
+    rH;
 
     IMAGES_SWIMMING = [
         'img/1.Sharkie/1.IDLE/1.png',
@@ -87,7 +98,6 @@ class Character extends MovableObject {
     }
 
     animate() {
-
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.x += this.speed;

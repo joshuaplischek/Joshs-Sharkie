@@ -6,17 +6,6 @@ class DrawableObject {
     y = 250;
     width = 150;
     height = 150;
-    offset = {
-        top: 90,
-        right: 35,
-        bottom: 40,
-        left: 40,
-    };
-
-    rX;
-    rY;
-    rW;
-    rH;
 
     loadImage(path) {
         this.img = new Image(); // this.img ist das gleiche wie document.get...Id("...")
@@ -43,7 +32,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character) {
+        if (this instanceof Character || this instanceof BlubbFish) {
             ctx.beginPath();
             ctx.lineWidth = "5";
             ctx.strokeStyle = "blue";
@@ -52,14 +41,6 @@ class DrawableObject {
                 this.y + this.offset.top,
                 this.width - this.offset.left - this.offset.right,
                 this.height - this.offset.top - this.offset.bottom);
-            ctx.stroke();
-        }
-
-        if (this instanceof BlubbFish) {
-            ctx.beginPath();
-            ctx.lineWidth = "5";
-            ctx.strokeStyle = "blue";
-            ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
         }
     }
