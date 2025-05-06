@@ -1,5 +1,5 @@
 class World {
-  charackter = new Character();
+  character = new Character();
   level = level1;
   canvas;
   ctx;
@@ -15,17 +15,18 @@ class World {
     this.draw();
     this.connectCharactertoEnemies();
     this.setWorld();
-    this.charackter.animate();
-    this.charackter.getRealFrame();
+    this.character.animate();
+    this.character.getRealFrame();
     this.run();
   }
 
   setWorld() {
-    this.charackter.world = this;
+    this.character.world = this;
   }
 
   run() {
     setInterval(() => {
+      this.character.getRealFrame();
       this.checkCollisions();
       this.checkShootingObjects();
     }, 200);
@@ -33,7 +34,7 @@ class World {
 
   checkShootingObjects(){
     if (this.keyboard.D) {
-      let bubble = new ShootableObject(this.charackter.x +140, this.charackter.y + 100);
+      let bubble = new ShootableObject(this.character.x + 140, this.character.y + 100);
       this.shootableObjects.push(bubble)
     }
   }
@@ -48,10 +49,10 @@ class World {
 
   checkCollisions(){
     this.level.enemies.forEach((enemy) => {
-      if (this.charackter.isColliding(enemy)) {
-        this.charackter.hit();
-        console.log('BOOM', 'energy', this.charackter.energy)
-        this.statusBar.setPercentage(this.charackter.energy);
+      if (this.character.isColliding(enemy)) {
+        this.character.hit();
+        console.log('BOOM', 'energy', this.character.energy)
+        this.statusBar.setPercentage(this.character.energy);
       }
     });
   }
@@ -65,12 +66,12 @@ class World {
     this.addToMap(this.statusBar);
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.enemies);
-    this.addToMap(this.charackter);
+    this.addToMap(this.character);
     this.addObjectsToMap(this.shootableObjects)
 
     this.level.enemies.forEach((enemy) => {
       if (enemy instanceof Endboss) {
-        enemy.checkCharacterPosition(this.charackter);
+        enemy.checkCharacterPosition(this.character);
       }
     });
 

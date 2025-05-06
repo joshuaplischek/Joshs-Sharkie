@@ -2,18 +2,6 @@ class BlubbFish extends MovableObject{
     width= 70;
     height = 70;
     y = 250
-    offset = {
-        top: 0,
-        right: 0,
-        bottom: 20,
-        left: 0,
-    };
-
-    rX;
-    rY;
-    rW;
-    rH;
-    
     IMAGES_SWIMMING_ENEMIES = [
         'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png',
         'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png',
@@ -29,6 +17,12 @@ class BlubbFish extends MovableObject{
         this.y = Math.random() * 500;
         this.speed = 0.3 + Math.random() * 0.5;
         this.animate();
+        this.offset = {
+            top: 0,
+            right: 0,
+            bottom: 20,
+            left: 0,
+        };
     }
 
     animate(){

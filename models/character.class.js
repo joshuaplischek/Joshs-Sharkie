@@ -3,18 +3,6 @@ class Character extends MovableObject {
     height = 200;
     y = 150;
     speed = 7
-    offset = {
-        top: 90,
-        right: 35,
-        bottom: 40,
-        left: 40,
-    };
-
-    rX;
-    rY;
-    rW;
-    rH;
-
     IMAGES_SWIMMING = [
         'img/1.Sharkie/1.IDLE/1.png',
         'img/1.Sharkie/1.IDLE/2.png',
@@ -95,6 +83,12 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT_BY_BLUBBFISH)
         this.loadImages(this.IMAGES_SHOOTING_BUBBLE)
         this.loadImages(this.IMAGES_DEAD)
+        this.offset = {
+            top: 90,
+            right: 35,
+            bottom: 40,
+            left: 40,
+        }
     }
 
     animate() {

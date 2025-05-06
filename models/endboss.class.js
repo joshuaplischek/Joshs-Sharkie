@@ -62,6 +62,12 @@ class Endboss extends MovableObject{
         this.loadImages(this.IMAGES_SPAWN)
         this.loadImages(this.IMAGES_FLOATING)
         this.x = 720 * 5;
+        this.offset = {
+           top: 95,
+           right: 20,
+           bottom: 50,
+           left: 20,
+        };
      }
      
    checkCharacterPosition(character) {
