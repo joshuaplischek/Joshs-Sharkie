@@ -42,7 +42,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof BlubbFish || this instanceof Endboss) {
+        if (this instanceof Character || this instanceof BlubbFish || this instanceof Endboss || this instanceof ShootableObject) {
             ctx.beginPath();
             ctx.lineWidth = "5";
             ctx.strokeStyle = "blue";

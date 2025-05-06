@@ -1,5 +1,6 @@
 class World {
   character = new Character();
+  blubbfish = new BlubbFish();
   level = level1;
   canvas;
   ctx;
@@ -22,6 +23,7 @@ class World {
 
   setWorld() {
     this.character.world = this;
+    this.blubbfish.world = this;
   }
 
   run() {
@@ -32,7 +34,7 @@ class World {
     }, 200);
   }
 
-  checkShootingObjects(){
+  checkShootingObjects() {
     if (this.keyboard.D) {
       let bubble = new ShootableObject(this.character.x + 140, this.character.y + 100);
       this.shootableObjects.push(bubble)
@@ -47,13 +49,27 @@ class World {
     });
   }
 
-  checkCollisions(){
+  checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         this.character.hit();
         console.log('BOOM', 'energy', this.character.energy)
         this.statusBar.setPercentage(this.character.energy);
       }
+    });
+
+    this.shootableObjects.forEach((bubble, bubbleIndex) => {
+      this.level.enemies.forEach((enemy, enemyIndex) => {
+        if (bubble.isColliding(enemy)) {
+          console.log('Treffer!');
+
+          // Beispielverhalten: Gegner entfernen
+          this.level.enemies.splice(enemyIndex, 1);
+
+          // Bubble ebenfalls entfernen (wenn z. B. nur einmal schießen)
+          this.shootableObjects.splice(bubbleIndex, 1);
+        }
+      });
     });
   }
 
