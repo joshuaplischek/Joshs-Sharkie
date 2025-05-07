@@ -130,7 +130,7 @@ class Character extends MovableObject {
                 this.playOneTimeDeadAnimation(this.IMAGES_DEAD)
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH)
-            } else if (!this.isAttacking && this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.LEFT || this.world.keyboard.DOWN  ) {
+            } else if (!this.isAttacking && this.world.keyboard.RIGHT || !this.isAttacking && this.world.keyboard.UP || !this.isAttacking && this.world.keyboard.LEFT || !this.isAttacking && this.world.keyboard.DOWN  ) {
                 this.playAnimation(this.IMAGES_SWIMMING_FORWARD)
 
             } else if (!this.isAttacking) {
