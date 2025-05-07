@@ -105,21 +105,21 @@ class Character extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.isAttacking) {
                 this.x += this.speed;
                 this.otherDirection = false;
             }
 
-            if (this.world.keyboard.LEFT && this.x > 0) {
+            if (this.world.keyboard.LEFT && this.x > 0 && !this.isAttacking) {
                 this.x -= this.speed;
                 this.otherDirection = true;
             }
 
-            if (this.world.keyboard.UP && this.y > -80) {
+            if (this.world.keyboard.UP && this.y > -80 && !this.isAttacking) {
                 this.y -= this.speed;
             }
 
-            if (this.world.keyboard.DOWN && 280 > this.y) {
+            if (this.world.keyboard.DOWN && 280 > this.y && !this.isAttacking) {
                 this.y += this.speed;
             }
             this.world.camera_x = -this.x + 100;
@@ -130,11 +130,10 @@ class Character extends MovableObject {
                 this.playOneTimeDeadAnimation(this.IMAGES_DEAD)
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH)
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.LEFT || this.world.keyboard.DOWN) {
+            } else if (!this.isAttacking && this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.LEFT || this.world.keyboard.DOWN  ) {
                 this.playAnimation(this.IMAGES_SWIMMING_FORWARD)
-            } else if (this.world.keyboard.D) {
-                this.playAnimation(this.IMAGES_SHOOTING_BUBBLE)
-            } else {
+
+            } else if (!this.isAttacking) {
                 this.playAnimation(this.IMAGES_SWIMMING)
             }
         }, 150);
@@ -144,6 +143,14 @@ class Character extends MovableObject {
                 this.isAttacking = true;
                 this.characterAttackMove(this.IMAGES_FIN_SLAP);
             }
-        }, 200);
+
+            if (this.world.keyboard.D && !this.isAttacking) {
+                this.isAttacking = true;
+                this.characterAttackMove(this.IMAGES_SHOOTING_BUBBLE);
+                setTimeout(() => {
+                    this.world.checkShootingObjects();
+                }, 450);
+            }
+        }, 50);
     }
 }

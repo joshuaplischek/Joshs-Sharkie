@@ -7,11 +7,6 @@ class MovableObject extends DrawableObject {
     isAttacking = false;
     pos = 0;
 
-
-    /**
-     * 
-     * @param {Array} arr - [...] 
-     */
     playAnimation(image) {
         let i = this.currentImage % image.length;
         let path = image[i];
@@ -35,13 +30,17 @@ class MovableObject extends DrawableObject {
         if (this.attackIntervalId) {
             clearInterval(this.attackIntervalId);
         }
+
+        if(this.pos != 0 || this.currentImage != 0){
+            this.pos = 0;
+            this.currentImage = 0;
+        }
         this.attackIntervalId = setInterval(() => {
             if (this.pos >= image.length) {
                 clearInterval(this.attackIntervalId);
                 this.attackIntervalId = null;
-                this.isAttacking = false; // Freigeben für neuen Angriff
+                this.isAttacking = false;
                 this.pos = 0;
-                this.currentImage = 0;
                 console.log('✅ Animation abgeschlossen');
             } else {
                 let i = this.currentImage % image.length;
@@ -51,11 +50,11 @@ class MovableObject extends DrawableObject {
                 this.pos++;
                 console.log('🔁 Neue Angriffsanimation gestartet' + this.pos);
             }
-        }, 150);
+        }, 70);
     }
 
     hit() {
-        this.energy -= 5;
+        this.energy -= 10;
         if (this.energy < 0) {
             this.energy = 0;
         } else {

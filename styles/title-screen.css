@@ -5,6 +5,7 @@
     background-image: url('../img/3. Background/Layers/5. Water/D2.png');
     background-size: cover;
     object-fit: cover;
+    box-shadow: 2px 2px 10px 2px black;
 }
 
 .barriers{

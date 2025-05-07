@@ -8,6 +8,7 @@ class World {
   camera_x = 0;
   statusBar = new StatusBar;
   shootableObjects = [];
+  
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -30,15 +31,12 @@ class World {
     setInterval(() => {
       this.character.getRealFrame();
       this.checkCollisions();
-      this.checkShootingObjects();
     }, 200);
   }
 
   checkShootingObjects() {
-    if (this.keyboard.D) {
       let bubble = new ShootableObject(this.character.x + 140, this.character.y + 100);
       this.shootableObjects.push(bubble)
-    }
   }
 
   connectCharactertoEnemies() {
