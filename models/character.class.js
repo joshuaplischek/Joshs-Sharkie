@@ -73,6 +73,17 @@ class Character extends MovableObject {
         'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png',
     ];
 
+    IMAGES_FIN_SLAP = [
+        'img/1.Sharkie/4.Attack/Fin slap/1.png',
+        'img/1.Sharkie/4.Attack/Fin slap/2.png',
+        'img/1.Sharkie/4.Attack/Fin slap/3.png',
+        'img/1.Sharkie/4.Attack/Fin slap/4.png',
+        'img/1.Sharkie/4.Attack/Fin slap/5.png',
+        'img/1.Sharkie/4.Attack/Fin slap/6.png',
+        'img/1.Sharkie/4.Attack/Fin slap/7.png',
+        'img/1.Sharkie/4.Attack/Fin slap/8.png',
+    ];
+
     world;
 
     constructor() {
@@ -82,6 +93,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT_BY_JELLYFISH)
         this.loadImages(this.IMAGES_HURT_BY_BLUBBFISH)
         this.loadImages(this.IMAGES_SHOOTING_BUBBLE)
+        this.loadImages(this.IMAGES_FIN_SLAP)
         this.loadImages(this.IMAGES_DEAD)
         this.offset = {
             top: 90,
@@ -126,6 +138,12 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_SWIMMING)
             }
         }, 150);
-    }
 
+        setInterval(() => {
+            if (this.world.keyboard.SPACE && !this.isAttacking) {
+                this.isAttacking = true;
+                this.characterAttackMove(this.IMAGES_FIN_SLAP);
+            }
+        }, 200);
+    }
 }

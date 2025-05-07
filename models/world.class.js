@@ -61,8 +61,9 @@ class World {
     this.shootableObjects.forEach((bubble, bubbleIndex) => {
       this.level.enemies.forEach((enemy, enemyIndex) => {
         if (bubble.isColliding(enemy)) {
-          console.log('Treffer!');
-
+          this.level.enemies[enemyIndex].energy = 0;
+          console.log('Treffer!', this.level.enemies[enemyIndex].energy);
+          
           // Beispielverhalten: Gegner entfernen
           this.level.enemies.splice(enemyIndex, 1);
 
@@ -127,6 +128,5 @@ class World {
     this.ctx.restore();
     mo.x = mo.x * -1;
   }
-
 }
 

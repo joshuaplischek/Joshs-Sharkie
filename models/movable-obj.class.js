@@ -4,6 +4,9 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
     deathCounter = 0;
+    isAttacking = false;
+    pos = 0;
+
 
     /**
      * 
@@ -28,6 +31,29 @@ class MovableObject extends DrawableObject {
         }
     };
 
+    characterAttackMove(image) {
+        if (this.attackIntervalId) {
+            clearInterval(this.attackIntervalId);
+        }
+        this.attackIntervalId = setInterval(() => {
+            if (this.pos >= image.length) {
+                clearInterval(this.attackIntervalId);
+                this.attackIntervalId = null;
+                this.isAttacking = false; // Freigeben für neuen Angriff
+                this.pos = 0;
+                this.currentImage = 0;
+                console.log('✅ Animation abgeschlossen');
+            } else {
+                let i = this.currentImage % image.length;
+                let path = image[i];
+                this.img = this.imageCash[path];
+                this.currentImage++;
+                this.pos++;
+                console.log('🔁 Neue Angriffsanimation gestartet' + this.pos);
+            }
+        }, 150);
+    }
+
     hit() {
         this.energy -= 5;
         if (this.energy < 0) {
@@ -49,10 +75,10 @@ class MovableObject extends DrawableObject {
 
     isColliding(mo) {
         //funktioniert 
-        return this.x + this.offset.left +this.width -this.offset.right - this.offset.left > mo.x + mo.offset.left &&
-        this.y + this.offset.top + this.height-this.offset.bottom > mo.y + mo.offset.top &&
-        this.x + this.offset.left < mo.x + mo.offset.left + mo.width - mo.offset.left -mo.offset.right &&
-        this.y + this.offset.top < mo.y + mo.offset.top + mo.height - mo.offset.top - mo.offset.bottom;
+        return this.x + this.offset.left + this.width - this.offset.right - this.offset.left > mo.x + mo.offset.left &&
+            this.y + this.offset.top + this.height - this.offset.top - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.offset.left + mo.width - mo.offset.left - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.offset.top + mo.height - mo.offset.top - mo.offset.bottom;
 
         //funktioniert nicht
         // return this.rX + this.rW > mo.rX &&
