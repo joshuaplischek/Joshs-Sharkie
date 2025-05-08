@@ -2,7 +2,6 @@ class BlubbFish extends MovableObject {
     width = 70;
     height = 70;
     y = 250
-    isAgressif = false;
     IMAGES_SWIMMING_ENEMIES = [
         'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png',
         'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png',
@@ -41,9 +40,10 @@ class BlubbFish extends MovableObject {
         };
     }
 
+
     animate() {
         setInterval(() => {
-            if (this.isDefeated()) {
+            if (this.isAngry()) {
                 this.playAnimation(this.IMAGES_AGRESSIV_BLUBBFISH)
             } else {
                 this.playAnimation(this.IMAGES_SWIMMING_ENEMIES);

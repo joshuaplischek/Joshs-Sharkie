@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     lastShock = 0;
     deathCounter = 0;
     isAttacking = false;
+    isAgressif = 100;
     pos = 0;
     direction = false;
     minY = 20;
@@ -87,13 +88,17 @@ class MovableObject extends DrawableObject {
         return timepassed < 0.5;
     }
 
+    isAngry() {
+        return this.isAgressif == 0;
+    }
+
     isDead() {
         return this.energy == 0;
     };
 
     isDefeated() {
         return this.lifePoints == 0;
-    }
+    };
 
     isColliding(mo) {
         //funktioniert 
