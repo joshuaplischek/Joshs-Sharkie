@@ -41,14 +41,12 @@ class MovableObject extends DrawableObject {
                 this.attackIntervalId = null;
                 this.isAttacking = false;
                 this.pos = 0;
-                console.log('✅ Animation abgeschlossen');
             } else {
                 let i = this.currentImage % image.length;
                 let path = image[i];
                 this.img = this.imageCash[path];
                 this.currentImage++;
                 this.pos++;
-                console.log('🔁 Neue Angriffsanimation gestartet' + this.pos);
             }
         }, 70);
     }

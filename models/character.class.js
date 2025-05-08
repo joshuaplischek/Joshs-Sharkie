@@ -132,7 +132,6 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH)
             } else if (!this.isAttacking && this.world.keyboard.RIGHT || !this.isAttacking && this.world.keyboard.UP || !this.isAttacking && this.world.keyboard.LEFT || !this.isAttacking && this.world.keyboard.DOWN  ) {
                 this.playAnimation(this.IMAGES_SWIMMING_FORWARD)
-
             } else if (!this.isAttacking) {
                 this.playAnimation(this.IMAGES_SWIMMING)
             }
