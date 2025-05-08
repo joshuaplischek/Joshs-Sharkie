@@ -6,6 +6,9 @@ class MovableObject extends DrawableObject {
     deathCounter = 0;
     isAttacking = false;
     pos = 0;
+    direction = false;
+    minY = 20;
+    maxY = 440;
 
     playAnimation(image) {
         let i = this.currentImage % image.length;
@@ -27,11 +30,7 @@ class MovableObject extends DrawableObject {
     };
 
     characterAttackMove(image) {
-        if (this.attackIntervalId) {
-            clearInterval(this.attackIntervalId);
-        }
-
-        if(this.pos != 0 || this.currentImage != 0){
+        if (this.pos != 0 || this.currentImage != 0) {
             this.pos = 0;
             this.currentImage = 0;
         }
@@ -89,5 +88,31 @@ class MovableObject extends DrawableObject {
             this.x -= this.speed;
         }, 1000 / 60);
     };
+
+
+moveDirection() {
+    setInterval(() => {
+        if (this.y <= 20) {
+            this.direction = true; // Richtung: nach unten
+        }
+        if (this.y >= 460 - 125) {
+            this.direction = false; // Richtung: nach oben
+        }
+
+        if (this.direction) {
+            this.moveDown();
+        } else {
+            this.moveUp();
+        }
+    }, 1000 / 60);
+}
+
+    moveUp() {
+        this.y -= this.speed;
+    };
+
+    moveDown() {
+        this.y += this.speed;
+    }
 
 }
