@@ -29,7 +29,9 @@ class World {
   run() {
     setInterval(() => {
       this.character.getRealFrame();
-      this.checkCollisions();
+      this.checkCollisionsBlubbfish();
+      this.checkCollisionsJellyFish();
+      // this.checkCollisionsEndboss();
     }, 200);
   }
 
@@ -46,23 +48,41 @@ class World {
     });
   }
 
-  checkCollisions() {
+  checkCollisionsBlubbfish() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         this.character.hit();
-        console.log('BOOM', 'energy', this.character.energy)
+        console.log('blubbfish', this.character.energy)
         this.statusBar.setPercentage(this.character.energy);
       }
     });
-
     this.shootableObjects.forEach((bubble, bubbleIndex) => {
       this.level.enemies.forEach((enemy, enemyIndex) => {
         if (bubble.isColliding(enemy)) {
-          this.level.enemies[enemyIndex].energy = 0;
-          console.log('Treffer!', this.level.enemies[enemyIndex].energy);
+          this.level.enemies[enemyIndex].lifePoints = 0;
           
+          this.blubbfish.enemyHit(enemyIndex);
+          this.shootableObjects.splice(bubbleIndex, 1);
+        }
+      });
+    });
+  }
+
+  checkCollisionsJellyFish() {
+    this.level.jellys.forEach((jelly) => {
+      if (this.character.isColliding(jelly)) {
+        this.character.shock();
+        console.log('jelly', this.character.energy)
+        this.statusBar.setPercentage(this.character.energy);
+      }
+    });
+    this.shootableObjects.forEach((bubble, bubbleIndex) => {
+      this.level.jellys.forEach((jelly, jellyIndex) => {
+        if (bubble.isColliding(jelly)) {
+          console.log('Treffer!', this.level.jellys[jellyIndex].energy);
+
           // Beispielverhalten: Gegner entfernen
-          this.level.enemies.splice(enemyIndex, 1);
+          this.level.jellys.splice(jellyIndex, 1);
 
           // Bubble ebenfalls entfernen (wenn z. B. nur einmal schießen)
           this.shootableObjects.splice(bubbleIndex, 1);
@@ -127,5 +147,6 @@ class World {
     this.ctx.restore();
     mo.x = mo.x * -1;
   }
+
 }
 

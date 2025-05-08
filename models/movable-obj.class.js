@@ -2,7 +2,9 @@ class MovableObject extends DrawableObject {
     speed = 0.3;
     otherDirection = false;
     energy = 100;
+    lifePoints = 100;
     lastHit = 0;
+    lastShock = 0;
     deathCounter = 0;
     isAttacking = false;
     pos = 0;
@@ -59,8 +61,28 @@ class MovableObject extends DrawableObject {
         }
     };
 
+    enemyHit(enemyIndex) {
+        this.lifePoints = 0
+    };
+
+
+    shock() {
+        this.energy -= 5;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastShock = new Date().getTime();
+        }
+    };
+
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // difference in ms
+        timepassed = timepassed / 1000; // difference in sec
+        return timepassed < 0.5;
+    }
+
+    isShocked() {
+        let timepassed = new Date().getTime() - this.lastShock; // difference in ms
         timepassed = timepassed / 1000; // difference in sec
         return timepassed < 0.5;
     }
@@ -68,6 +90,10 @@ class MovableObject extends DrawableObject {
     isDead() {
         return this.energy == 0;
     };
+
+    isDefeated() {
+        return this.lifePoints == 0;
+    }
 
     isColliding(mo) {
         //funktioniert 
@@ -90,22 +116,22 @@ class MovableObject extends DrawableObject {
     };
 
 
-moveDirection() {
-    setInterval(() => {
-        if (this.y <= 20) {
-            this.direction = true; // Richtung: nach unten
-        }
-        if (this.y >= 460 - 125) {
-            this.direction = false; // Richtung: nach oben
-        }
+    moveDirection() {
+        setInterval(() => {
+            if (this.y <= 20) {
+                this.direction = true; // Richtung: nach unten
+            }
+            if (this.y >= 460 - 125) {
+                this.direction = false; // Richtung: nach oben
+            }
 
-        if (this.direction) {
-            this.moveDown();
-        } else {
-            this.moveUp();
-        }
-    }, 1000 / 60);
-}
+            if (this.direction) {
+                this.moveDown();
+            } else {
+                this.moveUp();
+            }
+        }, 1000 / 60);
+    }
 
     moveUp() {
         this.y -= this.speed;
@@ -113,6 +139,11 @@ moveDirection() {
 
     moveDown() {
         this.y += this.speed;
+    }
+    dead() {
+        setInterval(() => {
+            this.y -= 0.2;
+        }, 1000 / 60);
     }
 
 }

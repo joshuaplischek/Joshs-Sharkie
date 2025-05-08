@@ -1,5 +1,5 @@
-class BlubbFish extends MovableObject{
-    width= 70;
+class BlubbFish extends MovableObject {
+    width = 70;
     height = 70;
     y = 250
     IMAGES_SWIMMING_ENEMIES = [
@@ -24,7 +24,7 @@ class BlubbFish extends MovableObject{
 
     world;
 
-    constructor(){
+    constructor() {
         super().loadImage('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadImages(this.IMAGES_SWIMMING_ENEMIES)
         this.x = 400 + Math.random() * 3200;
@@ -39,9 +39,13 @@ class BlubbFish extends MovableObject{
         };
     }
 
-    animate(){
+    animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_SWIMMING_ENEMIES);
+            if (this.isDefeated()) {
+                this.loadImage('img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 1 (can animate by going up).png')
+            } else {
+                this.playAnimation(this.IMAGES_SWIMMING_ENEMIES);
+            }
         }, 150);
 
         this.moveLeft()
