@@ -59,8 +59,7 @@ class World {
     this.shootableObjects.forEach((bubble, bubbleIndex) => {
       this.level.enemies.forEach((enemy, enemyIndex) => {
         if (bubble.isColliding(enemy)) {
-          this.level.enemies[enemyIndex].lifePoints = 0;
-          
+          this.level.enemies[enemyIndex].isAgressif = true;
           this.blubbfish.enemyHit(enemyIndex);
           this.shootableObjects.splice(bubbleIndex, 1);
         }
@@ -72,19 +71,13 @@ class World {
     this.level.jellys.forEach((jelly) => {
       if (this.character.isColliding(jelly)) {
         this.character.shock();
-        console.log('jelly', this.character.energy)
         this.statusBar.setPercentage(this.character.energy);
       }
     });
     this.shootableObjects.forEach((bubble, bubbleIndex) => {
       this.level.jellys.forEach((jelly, jellyIndex) => {
         if (bubble.isColliding(jelly)) {
-          console.log('Treffer!', this.level.jellys[jellyIndex].energy);
-
-          // Beispielverhalten: Gegner entfernen
-          this.level.jellys.splice(jellyIndex, 1);
-
-          // Bubble ebenfalls entfernen (wenn z. B. nur einmal schießen)
+          this.level.jellys[jellyIndex].lifePoints = 0;
           this.shootableObjects.splice(bubbleIndex, 1);
         }
       });

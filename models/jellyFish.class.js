@@ -32,6 +32,7 @@ class JellyFish extends MovableObject {
     constructor() {
         super().loadImage('img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png');
         this.loadImages(this.IMAGES_JELLYFISH)
+        this.loadImages(this.IMAGES_DEAD_JELLY)
         this.x = 400 + Math.random() * 3200;
         this.y = this.minY + Math.random() * (this.maxY - this.minY);
         this.speed = 0.5 + Math.random() * 0.5;
@@ -40,7 +41,11 @@ class JellyFish extends MovableObject {
 
     animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_JELLYFISH);
+            if (this.isDefeated()) {
+                this.playAnimation(this.IMAGES_DEAD_JELLY);
+            } else {
+                this.playAnimation(this.IMAGES_JELLYFISH);
+            }
         }, 100);
         this.moveDirection()
     }

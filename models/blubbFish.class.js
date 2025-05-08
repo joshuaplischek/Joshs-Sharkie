@@ -2,6 +2,7 @@ class BlubbFish extends MovableObject {
     width = 70;
     height = 70;
     y = 250
+    isAgressif = false;
     IMAGES_SWIMMING_ENEMIES = [
         'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png',
         'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png',
@@ -27,6 +28,7 @@ class BlubbFish extends MovableObject {
     constructor() {
         super().loadImage('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadImages(this.IMAGES_SWIMMING_ENEMIES)
+        this.loadImages(this.IMAGES_AGRESSIV_BLUBBFISH)
         this.x = 400 + Math.random() * 3200;
         this.y = this.minY + Math.random() * (this.maxY - this.minY);
         this.speed = 0.3 + Math.random() * 0.5;
@@ -42,7 +44,7 @@ class BlubbFish extends MovableObject {
     animate() {
         setInterval(() => {
             if (this.isDefeated()) {
-                this.loadImage('img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 1 (can animate by going up).png')
+                this.playAnimation(this.IMAGES_AGRESSIV_BLUBBFISH)
             } else {
                 this.playAnimation(this.IMAGES_SWIMMING_ENEMIES);
             }
