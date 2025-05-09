@@ -2,6 +2,7 @@ class BlubbFish extends MovableObject {
     width = 70;
     height = 70;
     y = 250
+    energy = 100;
     angryFish = false;
     count = 0;
     IMAGES_SWIMMING_ENEMIES = [
@@ -39,6 +40,7 @@ class BlubbFish extends MovableObject {
         this.loadImages(this.IMAGES_SWIMMING_ENEMIES)
         this.loadImages(this.IMAGES_AGRESSIV_BLUBBFISH)
         this.loadImages(this.IMAGES_IS_AGRESSIV_SWIM)
+        this.loadImage(this.IMAGES_DEAD_BLUBBFISCH)
         this.x = 400 + Math.random() * 3200;
         this.y = this.minY + Math.random() * (this.maxY - this.minY);
         this.speed = 0.3 + Math.random() * 0.5;
@@ -65,4 +67,17 @@ class BlubbFish extends MovableObject {
         }, 150);
         this.moveLeft()
     };
+
+    reduceEnergy(amount) {
+        this.energy -= amount;
+        if (this.energy <= 0) {
+            this.die();
+        }
+    }
+
+    die() {
+        this.speed = -25;
+        this.loadImage(this.IMAGES_DEAD_BLUBBFISCH)
+    }
+    
 };

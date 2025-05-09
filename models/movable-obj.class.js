@@ -76,6 +76,13 @@ class MovableObject extends DrawableObject {
         }
     };
 
+    attack() {
+        this.isAttacking = true; // Set to true when the character starts attacking
+        setTimeout(() => {
+            this.isAttacking = false; // Reset after the attack animation ends
+        }, 500); // Adjust the duration to match the attack animation
+    }
+
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // difference in ms
         timepassed = timepassed / 1000; // difference in sec

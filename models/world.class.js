@@ -51,9 +51,10 @@ class World {
 
   checkCollisionsBlubbfish() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
+      if (this.character.isAttacking && this.character.isColliding(enemy)) {
+        enemy.reduceEnergy(100);}
+      if (!this.character.isAttacking && this.character.isColliding(enemy)) {
         this.character.hit();
-        console.log('blubbfish', this.character.energy)
         this.statusBar.setPercentage(this.character.energy);
       };
     });
