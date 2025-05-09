@@ -100,8 +100,8 @@ class Character extends MovableObject {
             right: 35,
             bottom: 40,
             left: 40,
-        }
-    }
+        };
+    };
 
     animate() {
         setInterval(() => {
@@ -137,14 +137,14 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_SWIMMING_FORWARD)
             } else if (!this.isAttacking) {
                 this.playAnimation(this.IMAGES_SWIMMING)
-            }
+            };
         }, 150);
 
         setInterval(() => {
             if (this.world.keyboard.SPACE && !this.isAttacking) {
                 this.isAttacking = true;
                 this.characterAttackMove(this.IMAGES_FIN_SLAP);
-            }
+            };
 
             if (this.world.keyboard.D && !this.isAttacking) {
                 this.isAttacking = true;
@@ -152,7 +152,7 @@ class Character extends MovableObject {
                 setTimeout(() => {
                     this.world.checkShootingObjects();
                 }, 450);
-            }
+            };
         }, 50);
-    }
-}
+    };
+};
