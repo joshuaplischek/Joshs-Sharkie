@@ -80,17 +80,17 @@ class MovableObject extends DrawableObject {
         let timepassed = new Date().getTime() - this.lastHit; // difference in ms
         timepassed = timepassed / 1000; // difference in sec
         return timepassed < 0.5;
-    }
+    };
 
     isShocked() {
         let timepassed = new Date().getTime() - this.lastShock; // difference in ms
         timepassed = timepassed / 1000; // difference in sec
         return timepassed < 0.5;
-    }
+    };
 
     isAngry() {
         return this.isAgressif == true;
-    }
+    };
 
     isDead() {
         return this.energy == 0;
@@ -120,7 +120,6 @@ class MovableObject extends DrawableObject {
         }, 1000 / 60);
     };
 
-
     moveDirection() {
         setInterval(() => {
             if (this.y <= 20) {
@@ -136,8 +135,7 @@ class MovableObject extends DrawableObject {
                 this.moveUp();
             }
         }, 1000 / 60);
-    }
-
+    };
 
     moveUp() {
         this.y -= this.speed;
@@ -145,11 +143,11 @@ class MovableObject extends DrawableObject {
 
     moveDown() {
         this.y += this.speed;
-    }
+    };
+
     dead() {
         setInterval(() => {
             this.y -= 0.2;
         }, 1000 / 60);
-    }
-
+    };
 }
