@@ -59,7 +59,7 @@ class World {
     this.shootableObjects.forEach((bubble, bubbleIndex) => {
       this.level.enemies.forEach((enemy, enemyIndex) => {
         if (bubble.isColliding(enemy)) {
-          this.level.enemies[enemyIndex].isAgressif = 0;
+          this.level.enemies[enemyIndex].isAgressif = true;
           this.blubbfish.enemyHit(enemyIndex);
           this.shootableObjects.splice(bubbleIndex, 1);
         }

@@ -7,7 +7,7 @@ class MovableObject extends DrawableObject {
     lastShock = 0;
     deathCounter = 0;
     isAttacking = false;
-    isAgressif = 100;
+    isAgressif = false;
     pos = 0;
     direction = false;
     minY = 20;
@@ -89,7 +89,7 @@ class MovableObject extends DrawableObject {
     }
 
     isAngry() {
-        return this.isAgressif == 0;
+        return this.isAgressif == true;
     }
 
     isDead() {
@@ -137,6 +137,7 @@ class MovableObject extends DrawableObject {
             }
         }, 1000 / 60);
     }
+
 
     moveUp() {
         this.y -= this.speed;

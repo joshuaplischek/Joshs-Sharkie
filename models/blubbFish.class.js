@@ -40,7 +40,6 @@ class BlubbFish extends MovableObject {
         };
     }
 
-
     animate() {
         setInterval(() => {
             if (this.isAngry()) {
