@@ -7,6 +7,7 @@ class World {
   keyboard;
   camera_x = 0;
   statusBar = new StatusBar;
+  bubbleBar = new BubbleBar;
   shootableObjects = [];
 
   constructor(canvas, keyboard) {
@@ -31,7 +32,7 @@ class World {
       this.character.getRealFrame();
       this.checkCollisionsBlubbfish();
       this.checkCollisionsJellyFish();
-      // this.checkCollisionsEndboss();
+      // this.checkCollisionsEndboss(); Muss noch erstellt werden. Volles Programm.
     }, 200);
   };
 
@@ -69,7 +70,7 @@ class World {
 
   checkCollisionsJellyFish() {
     this.level.jellys.forEach((jelly) => {
-      if (this.character.isColliding(jelly)) {
+      if (!jelly.isDefeated() && this.character.isColliding(jelly)) {
         this.character.shock();
         this.statusBar.setPercentage(this.character.energy);
       };
@@ -77,7 +78,7 @@ class World {
     this.shootableObjects.forEach((bubble, bubbleIndex) => {
       this.level.jellys.forEach((jelly, jellyIndex) => {
         if (bubble.isColliding(jelly)) {
-          this.level.jellys[jellyIndex].lifePoints = 0;
+          this.level.jellys[jellyIndex].inBubble = true;
           this.shootableObjects.splice(bubbleIndex, 1);
         };
       });
@@ -91,6 +92,7 @@ class World {
     this.addObjectsToMap(this.level.godRays);
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);
+    this.addToMap(this.bubbleBar);
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.jellys);

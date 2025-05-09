@@ -105,21 +105,21 @@ class Character extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.isAttacking) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.isAttacking && !this.isDead()) {
                 this.x += this.speed;
                 this.otherDirection = false;
             }
 
-            if (this.world.keyboard.LEFT && this.x > 0 && !this.isAttacking) {
+            if (this.world.keyboard.LEFT && this.x > 0 && !this.isAttacking && !this.isDead()) {
                 this.x -= this.speed;
                 this.otherDirection = true;
             }
 
-            if (this.world.keyboard.UP && this.y > -80 && !this.isAttacking) {
+            if (this.world.keyboard.UP && this.y > -80 && !this.isAttacking && !this.isDead()) {
                 this.y -= this.speed;
             }
 
-            if (this.world.keyboard.DOWN && 280 > this.y && !this.isAttacking) {
+            if (this.world.keyboard.DOWN && 280 > this.y && !this.isAttacking && !this.isDead()) {
                 this.y += this.speed;
             }
             this.world.camera_x = -this.x + 100;

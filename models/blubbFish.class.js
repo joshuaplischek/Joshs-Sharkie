@@ -2,6 +2,8 @@ class BlubbFish extends MovableObject {
     width = 70;
     height = 70;
     y = 250
+    angryFish = false;
+    count = 0;
     IMAGES_SWIMMING_ENEMIES = [
         'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png',
         'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png',
@@ -36,6 +38,7 @@ class BlubbFish extends MovableObject {
         super().loadImage('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadImages(this.IMAGES_SWIMMING_ENEMIES)
         this.loadImages(this.IMAGES_AGRESSIV_BLUBBFISH)
+        this.loadImages(this.IMAGES_IS_AGRESSIV_SWIM)
         this.x = 400 + Math.random() * 3200;
         this.y = this.minY + Math.random() * (this.maxY - this.minY);
         this.speed = 0.3 + Math.random() * 0.5;
@@ -50,14 +53,16 @@ class BlubbFish extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if (this.isAngry()) {
-                this.playAnimation(this.IMAGES_AGRESSIV_BLUBBFISH) // muss noch schneller schwimmen und eine andere Animation haben
-                this.speed = 0.7;
-            } else {
+            if (this.isAngry() && !this.angryFish) {
+                this.playAnimation(this.IMAGES_AGRESSIV_BLUBBFISH)
+                this.angryFish = true;
+                this.speed = 2;
+            } else if (this.isAgressif) {
+                this.playAnimation(this.IMAGES_IS_AGRESSIV_SWIM)
+            } else if (!this.angryFish) {
                 this.playAnimation(this.IMAGES_SWIMMING_ENEMIES);
             }
         }, 150);
-
         this.moveLeft()
     };
 };

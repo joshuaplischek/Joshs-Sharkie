@@ -1,7 +1,7 @@
 class JellyFish extends MovableObject {
     height = 125;
     width = 80;
-
+    inBubble = false;
     IMAGES_JELLYFISH = [
         'img/2.Enemy/2 Jelly fish/Swim/1.png',
         'img/2.Enemy/2 Jelly fish/Swim/2.png',
@@ -43,11 +43,17 @@ class JellyFish extends MovableObject {
         setInterval(() => {
             if (this.isDefeated()) {
                 this.playAnimation(this.IMAGES_DEAD_JELLY);
+                this.inBubble = true;
             } else {
                 this.playAnimation(this.IMAGES_JELLYFISH);
             }
+
+            
         }, 100);
         this.moveDirection()
     }
 
+    isDefeated() {
+        return this.inBubble;
+    }
 }

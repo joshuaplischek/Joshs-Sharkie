@@ -122,21 +122,24 @@ class MovableObject extends DrawableObject {
 
     moveDirection() {
         setInterval(() => {
-            if (this.y <= 20) {
-                this.direction = true; // Richtung: nach unten
-            }
-            if (this.y >= 460 - 125) {
-                this.direction = false; // Richtung: nach oben
-            }
+            if (!this.inBubble) {
+                if (this.y <= 20) {
+                    this.direction = true;
+                }
+                if (this.y >= 460 - 125) {
+                    this.direction = false;
+                }
 
-            if (this.direction) {
-                this.moveDown();
+                if (this.direction) {
+                    this.moveDown();
+                } else {
+                    this.moveUp();
+                }
             } else {
                 this.moveUp();
             }
         }, 1000 / 60);
-    };
-
+    }
     moveUp() {
         this.y -= this.speed;
     };
