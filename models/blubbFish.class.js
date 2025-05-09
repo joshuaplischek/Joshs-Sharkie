@@ -52,11 +52,12 @@ class BlubbFish extends MovableObject {
         setInterval(() => {
             if (this.isAngry()) {
                 this.playAnimation(this.IMAGES_AGRESSIV_BLUBBFISH) // muss noch schneller schwimmen und eine andere Animation haben
+                this.speed = 0.7;
             } else {
                 this.playAnimation(this.IMAGES_SWIMMING_ENEMIES);
             }
         }, 150);
 
         this.moveLeft()
-    }
-}
+    };
+};
