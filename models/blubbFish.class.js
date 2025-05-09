@@ -22,6 +22,14 @@ class BlubbFish extends MovableObject {
         'img/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition5.png',
     ];
 
+    IMAGES_IS_AGRESSIV_SWIM = [
+        'img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim1.png',
+        'img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim2.png',
+        'img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim3.png',
+        'img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim4.png',
+        'img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim5.png',
+    ];
+
     world;
 
     constructor() {
@@ -43,7 +51,7 @@ class BlubbFish extends MovableObject {
     animate() {
         setInterval(() => {
             if (this.isAngry()) {
-                this.playAnimation(this.IMAGES_AGRESSIV_BLUBBFISH)
+                this.playAnimation(this.IMAGES_AGRESSIV_BLUBBFISH) // muss noch schneller schwimmen und eine andere Animation haben
             } else {
                 this.playAnimation(this.IMAGES_SWIMMING_ENEMIES);
             }
