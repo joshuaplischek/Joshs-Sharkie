@@ -142,6 +142,7 @@ class World {
 
   checkCollisionsEndboss() {
     this.checkChargedBubbleEndbossCollisions();
+    this.checkCharacterEndBossCollisions();
   }
 
   checkChargedBubbleEndbossCollisions() {
@@ -152,6 +153,15 @@ class World {
           this.shootableObjects.splice(bubbleIndex, 1);
         }
       });
+    });
+  }
+
+  checkCharacterEndBossCollisions() {
+    this.level.boss.forEach((boss) => {
+      if (this.character.isColliding(boss)) {
+        this.character.hit();
+        this.statusBar.setPercentage(this.character.energy);
+      }
     });
   }
 
