@@ -14,6 +14,9 @@ class World {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
+    this.coins = [];
+    this.bottles = [];
+    this.populateCollectables()
     this.draw();
     this.connectCharactertoEnemies();
     this.setWorld();
@@ -21,6 +24,11 @@ class World {
     this.character.getRealFrame();
     this.run();
   };
+
+  populateCollectables() {
+    CollectableObjects.generateRandomCollectables(this.bottles, Bottle, 10, 360, 150);
+    // CollectableObjects.generateRandomCollectables(this.coins, Coin, 20, 250);
+  }
 
   setWorld() {
     this.character.world = this;
@@ -98,8 +106,10 @@ class World {
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.jellys);
     this.addObjectsToMap(this.level.boss);
+    this.addObjectsToMap(this.bottles);
     this.addToMap(this.character);
     this.addObjectsToMap(this.shootableObjects)
+    this.checkCollectBottle();
 
     this.level.boss.forEach((boss) => {
       if (boss instanceof Endboss) {
@@ -116,7 +126,20 @@ class World {
     });
   };
 
+  checkCollectBottle() {
+    if (this.bubbleBar.percentage >= 100) {
+      return;
+    }
+    this.bottles.forEach((bottle, index) => {
+      if (this.character.isColliding(bottle)) {
+        this.bottles.splice(index, 1); // Remove collected bottle
+        this.bubbleBar.increase(20);   // Increase bubbleBar by 20%
+      }
+    });
+  }
+
   addObjectsToMap(objects) {
+    if (!objects) return;
     objects.forEach((o) => {
       this.addToMap(o);
     });

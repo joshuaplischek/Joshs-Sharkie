@@ -117,5 +117,4 @@ const level2 = new Level(
         new BackroundObject('img/3. Background/Layers/3.Fondo 1/D2.png', 720 * 5),
         new BackroundObject('img/3. Background/Layers/2. Floor/D2.png', 720 * 5),
     ],
-
 );
