@@ -11,13 +11,19 @@ class ShootableObject extends MovableObject {
         this.y = y;
         this.height = 40;
         this.width = 40;
-        this.shoot();
     }
 
     shoot() {
-        this.speedX = 30;
-        setInterval(() => {
-            this.x += 10;
-        }, 25);
+        if (this.otherDirection === true) {
+            this.speedX = -30;
+            setInterval(() => {
+                this.x -= 10;
+            }, 25);
+        } else {
+            this.speedX = 30;
+            setInterval(() => {
+                this.x += 10;
+            }, 25);
+        }
     }
 }

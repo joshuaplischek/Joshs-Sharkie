@@ -1,20 +1,19 @@
-class BubbleBar extends DrawableObject {
+class CoinBar extends DrawableObject {
     IMAGES = [
-        'img/4. Marcadores/Purple/0_.png',
-        'img/4. Marcadores/Purple/20_.png',
-        'img/4. Marcadores/Purple/40_.png',
-        'img/4. Marcadores/Purple/60_.png',
-        'img/4. Marcadores/Purple/80_.png',
-        'img/4. Marcadores/Purple/100_.png',
+        'img/4. Marcadores/orange/0_  copia 2.png',
+        'img/4. Marcadores/orange/20_  copia.png',
+        'img/4. Marcadores/orange/40_  copia 2.png',
+        'img/4. Marcadores/orange/60_  copia 2.png',
+        'img/4. Marcadores/orange/100_ copia 2.png',
     ];
 
     constructor() {
         super()
         this.loadImages(this.IMAGES);
-        this.x = 250;
+        this.x = 500;
         this.y = 0;
         this.width = 200;
-        this.height = 60;
+        this.height = 55;
         this.setPercentage(0);
     }
 

@@ -21,9 +21,9 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     };
 
-    playOneTimeDeadAnimation(image) {
+    playOneTimeDeadAnimation(image, finalImagePath) {
         if (this.deathCounter == image.length - 1) {
-            this.loadImage('img/1.Sharkie/6.dead/1.Poisoned/12.png');
+            this.loadImage(finalImagePath);
         } else {
             let i = this.deathCounter % image.length;
             let path = image[i];
@@ -78,10 +78,10 @@ class MovableObject extends DrawableObject {
     };
 
     attack() {
-        this.isAttacking = true; // Set to true when the character starts attacking
+        this.isAttacking = true;
         setTimeout(() => {
-            this.isAttacking = false; // Reset after the attack animation ends
-        }, 500); // Adjust the duration to match the attack animation
+            this.isAttacking = false;
+        }, 500);
     }
 
     isHurt() {

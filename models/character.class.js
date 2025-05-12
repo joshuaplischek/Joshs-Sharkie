@@ -139,7 +139,7 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                this.playOneTimeDeadAnimation(this.IMAGES_DEAD)
+                this.playOneTimeDeadAnimation(this.IMAGES_DEAD, 'img/1.Sharkie/6.dead/1.Poisoned/12.png')
                 this.dead()
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH)
@@ -171,7 +171,7 @@ class Character extends MovableObject {
                 this.characterAttackMove(this.IMAGES_SHOOTING_CHARCHED_BUBBLE);
                 setTimeout(() => {
                     this.world.checkChargedBuuble();
-                    
+
                 }, 450);
             };
         }, 50);

@@ -8,6 +8,7 @@ class World {
   camera_x = 0;
   statusBar = new StatusBar;
   bubbleBar = new BubbleBar;
+  coinbar = new CoinBar;
   shootableObjects = [];
 
   constructor(canvas, keyboard) {
@@ -54,18 +55,24 @@ class World {
       this.character.getRealFrame();
       this.checkCollisionsBlubbfish();
       this.checkCollisionsJellyFish();
-      // this.checkCollisionsEndboss(); Muss noch erstellt werden. Volles Programm.
+      this.checkCollisionsEndboss();
     }, 200);
   };
 
   checkShootingObjects() {
-    let bubble = new ShootableObject(this.character.x + 140, this.character.y + 100);
+    let offsetX = this.character.otherDirection ? 10 : 140;
+    let bubble = new ShootableObject(this.character.x + offsetX, this.character.y + 100);
+    bubble.otherDirection = this.character.otherDirection;
+    bubble.shoot();
     this.shootableObjects.push(bubble)
   };
 
   checkChargedBuuble() {
     if (this.character.poisenBubble) {
-      let chargedBubble = new ChargedBubble(this.character.x + 140, this.character.y + 100);
+      let offsetX = this.character.otherDirection ? 10 : 140;
+      let chargedBubble = new ChargedBubble(this.character.x + offsetX, this.character.y + 100);
+      chargedBubble.otherDirection = this.character.otherDirection;
+      chargedBubble.shoot();
       this.shootableObjects.push(chargedBubble);
       this.bubbleBar.increase(-20);
     }
@@ -80,41 +87,73 @@ class World {
   };
 
   checkCollisionsBlubbfish() {
+    this.checkCharacterEnemyCollisions();
+    this.checkBubbleEnemyCollisions();
+  }
+
+  checkCharacterEnemyCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isAttacking && this.character.isColliding(enemy)) {
-        enemy.reduceEnergy(100);}
+        enemy.reduceEnergy(100);
+      }
       if (!this.character.isAttacking && this.character.isColliding(enemy)) {
         this.character.hit();
         this.statusBar.setPercentage(this.character.energy);
-      };
+      }
     });
+  }
+
+  checkBubbleEnemyCollisions() {
     this.shootableObjects.forEach((bubble, bubbleIndex) => {
       this.level.enemies.forEach((enemy, enemyIndex) => {
         if (bubble.isColliding(enemy)) {
           this.level.enemies[enemyIndex].isAgressif = true;
           this.blubbfish.enemyHit(enemyIndex);
           this.shootableObjects.splice(bubbleIndex, 1);
-        };
+        }
       });
     });
-  };
+  }
 
   checkCollisionsJellyFish() {
+    this.checkCharacterJellyFishCollisions();
+    this.checkBubbleJellyFishCollisions();
+  }
+
+  checkCharacterJellyFishCollisions() {
     this.level.jellys.forEach((jelly) => {
       if (!jelly.isDefeated() && this.character.isColliding(jelly)) {
         this.character.shock();
         this.statusBar.setPercentage(this.character.energy);
-      };
+      }
     });
+  }
+
+  checkBubbleJellyFishCollisions() {
     this.shootableObjects.forEach((bubble, bubbleIndex) => {
       this.level.jellys.forEach((jelly, jellyIndex) => {
         if (bubble.isColliding(jelly)) {
           this.level.jellys[jellyIndex].inBubble = true;
           this.shootableObjects.splice(bubbleIndex, 1);
-        };
+        }
       });
     });
-  };
+  }
+
+  checkCollisionsEndboss() {
+    this.checkChargedBubbleEndbossCollisions();
+  }
+
+  checkChargedBubbleEndbossCollisions() {
+    this.shootableObjects.forEach((bubble, bubbleIndex) => {
+      this.level.boss.forEach((boss) => {
+        if (boss instanceof Endboss && bubble instanceof ChargedBubble && bubble.isColliding(boss)) {
+          boss.reduceEnergy(20);
+          this.shootableObjects.splice(bubbleIndex, 1);
+        }
+      });
+    });
+  }
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleart
@@ -124,6 +163,7 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);
     this.addToMap(this.bubbleBar);
+    this.addToMap(this.coinbar);
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.jellys);
