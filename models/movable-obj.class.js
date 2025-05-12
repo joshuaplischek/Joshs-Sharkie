@@ -12,6 +12,7 @@ class MovableObject extends DrawableObject {
     direction = false;
     minY = 20;
     maxY = 440;
+    poisenBubble = false;
 
     playAnimation(image) {
         let i = this.currentImage % image.length;

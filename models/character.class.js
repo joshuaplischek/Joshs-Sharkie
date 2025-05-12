@@ -73,6 +73,17 @@ class Character extends MovableObject {
         'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png',
     ];
 
+    IMAGES_SHOOTING_CHARCHED_BUBBLE = [
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/3.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/4.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/5.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/6.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png',
+    ];
+
     IMAGES_FIN_SLAP = [
         'img/1.Sharkie/4.Attack/Fin slap/1.png',
         'img/1.Sharkie/4.Attack/Fin slap/2.png',
@@ -95,6 +106,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_SHOOTING_BUBBLE)
         this.loadImages(this.IMAGES_FIN_SLAP)
         this.loadImages(this.IMAGES_DEAD)
+        this.loadImages(this.IMAGES_SHOOTING_CHARCHED_BUBBLE)
         this.offset = {
             top: 90,
             right: 35,
@@ -146,11 +158,20 @@ class Character extends MovableObject {
                 this.characterAttackMove(this.IMAGES_FIN_SLAP);
             };
 
-            if (this.world.keyboard.D && !this.isAttacking) {
+            if (this.world.keyboard.D && !this.isAttacking && !this.poisenBubble) {
                 this.isAttacking = true;
                 this.characterAttackMove(this.IMAGES_SHOOTING_BUBBLE);
                 setTimeout(() => {
                     this.world.checkShootingObjects();
+                }, 450);
+            };
+
+            if (this.world.keyboard.D && !this.isAttacking && this.poisenBubble) {
+                this.isAttacking = true;
+                this.characterAttackMove(this.IMAGES_SHOOTING_CHARCHED_BUBBLE);
+                setTimeout(() => {
+                    this.world.checkChargedBuuble();
+                    
                 }, 450);
             };
         }, 50);

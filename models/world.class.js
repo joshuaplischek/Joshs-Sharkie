@@ -16,7 +16,9 @@ class World {
     this.keyboard = keyboard;
     this.coins = [];
     this.bottles = [];
-    this.populateCollectables()
+    this.spawnBottles();
+    this.populateCoins();
+    this.checkAndRefill();
     this.draw();
     this.connectCharactertoEnemies();
     this.setWorld();
@@ -25,10 +27,22 @@ class World {
     this.run();
   };
 
-  populateCollectables() {
-    CollectableObjects.generateRandomCollectables(this.bottles, Bottle, 10, 360, 150);
+  populateCoins() {
     // CollectableObjects.generateRandomCollectables(this.coins, Coin, 20, 250);
   }
+
+  spawnBottles(){
+    CollectableObjects.generateRandomCollectables(this.bottles, Bottle, 10, 360, 150);
+  }
+
+  checkAndRefill() {
+    setInterval(() => {
+      if (this.bottles.length <= 0) {
+        this.spawnBottles();
+      } else{ return; }
+    }, 1000);
+  }
+
 
   setWorld() {
     this.character.world = this;
@@ -45,8 +59,16 @@ class World {
   };
 
   checkShootingObjects() {
-      let bubble = new ShootableObject(this.character.x + 140, this.character.y + 100);
-      this.shootableObjects.push(bubble)
+    let bubble = new ShootableObject(this.character.x + 140, this.character.y + 100);
+    this.shootableObjects.push(bubble)
+  };
+
+  checkChargedBuuble() {
+    if (this.character.poisenBubble) {
+      let chargedBubble = new ChargedBubble(this.character.x + 140, this.character.y + 100);
+      this.shootableObjects.push(chargedBubble);
+      this.bubbleBar.increase(-20);
+    }
   };
 
   connectCharactertoEnemies() {
@@ -128,12 +150,17 @@ class World {
 
   checkCollectBottle() {
     if (this.bubbleBar.percentage >= 100) {
+      this.character.poisenBubble = true; 
       return;
     }
+    if (this.bubbleBar.percentage <= 0) {
+      this.character.poisenBubble = false;
+    }
+
     this.bottles.forEach((bottle, index) => {
       if (this.character.isColliding(bottle)) {
-        this.bottles.splice(index, 1); // Remove collected bottle
-        this.bubbleBar.increase(20);   // Increase bubbleBar by 20%
+        this.bottles.splice(index, 1);
+        this.bubbleBar.increase(20);
       }
     });
   }
