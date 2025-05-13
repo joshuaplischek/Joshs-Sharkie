@@ -93,6 +93,8 @@ class Endboss extends MovableObject {
             this.animate();
          }
       }, 150);
+      this.moveToCharacter(world.character);
+
    }
 
    animate() {
@@ -124,4 +126,25 @@ class Endboss extends MovableObject {
       timepassed = timepassed / 1000;
       return timepassed < 0.5;
    }
+
+   moveToCharacter(character) {
+      this.moveInterval = setInterval(() => {
+         if (this.endbossIsDead) {
+            clearInterval(this.moveInterval);
+            return;
+         }
+   
+         if (this.x < character.x) {
+            this.x += 5;
+         } else if (this.x > character.x) {
+            this.x -= 5;
+         }
+
+         if (this.y < character.y) {
+            this.y += 2;
+         } else if (this.y > character.y) {
+            this.y -= 2;
+         }
+      }, 40);
+  }
 }
