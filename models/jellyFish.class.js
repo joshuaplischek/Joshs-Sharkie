@@ -47,6 +47,7 @@ class JellyFish extends MovableObject {
 
     animate() {
         setInterval(() => {
+            if (this.gameIsOver) return;
             if (this.isDefeated()) {
                 this.playAnimation(this.IMAGES_DEAD_JELLY);
                 this.inBubble = true;

@@ -1,6 +1,7 @@
 class World {
   character = new Character();
   blubbfish = new BlubbFish();
+  endboss = new Endboss();
   level = level1;
   canvas;
   ctx;
@@ -38,6 +39,7 @@ class World {
 
   checkAndRefill() {
     setInterval(() => {
+      if (this.gameIsOver) return;
       if (this.bottles.length <= 0) {
         this.spawnBottles();
       } else{ return; }
@@ -48,10 +50,12 @@ class World {
   setWorld() {
     this.character.world = this;
     this.blubbfish.world = this;
+    this.endboss.world = this;
   };
 
   run() {
     setInterval(() => {
+      if (this.gameIsOver) return;
       this.character.getRealFrame();
       this.checkCollisionsBlubbfish();
       this.checkCollisionsJellyFish();

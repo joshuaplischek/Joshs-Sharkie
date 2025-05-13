@@ -29,7 +29,9 @@
   text-align: center;
   width: 720px;
   height: 480px;
-  background-image: url('../img/6.Botones/Tittles/You win/Mesa-de-trabajo-1.png');
+  background-image: url("../img/6.Botones/Tittles/You win/Mesa-de-trabajo-1.png");
+  background-position: center;
+  background-size: auto 100%;
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
@@ -50,32 +52,49 @@
   pointer-events: auto;
 }
 
-#deadSharkie img{
-    height: 200px;
+#deadSharkie img {
+  height: 200px;
 }
 
-#gameOverLine img{
-    height: 75px;
+#gameOverLine img {
+  height: 75px;
 }
 
-#tryAgain img{
-    height: 75px;
+#tryAgain img {
+  height: 75px;
 }
 
 #deadSharkie {
-    height: 100px;
+  height: 100px;
 }
 
 #gameOverLine {
-    height: 80px;
+  height: 80px;
 }
 
 #tryAgain {
-    height: 80px;
+  height: 80px;
 }
 
+#tryAgain img:hover {
+  cursor: pointer;
+  height: 70px;
+}
 
-#tryAgain img:hover{
-    cursor: pointer;
-    height: 70px;
+.try-again-win {
+  width: 720px;
+  height: 480px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+
+.try-again-win img {
+  height: 75px;
+  margin-bottom: 55px;
+}
+
+.try-again-win img:hover {
+  cursor: pointer;
+  height: 70px;
 }

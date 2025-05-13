@@ -17,11 +17,13 @@ class ShootableObject extends MovableObject {
         if (this.otherDirection === true) {
             this.speedX = -30;
             setInterval(() => {
+                if (this.gameIsOver) return;
                 this.x -= 10;
             }, 25);
         } else {
             this.speedX = 30;
             setInterval(() => {
+                if (this.gameIsOver) return;
                 this.x += 10;
             }, 25);
         }

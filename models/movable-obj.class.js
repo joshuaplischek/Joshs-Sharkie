@@ -13,6 +13,8 @@ class MovableObject extends DrawableObject {
     minY = 20;
     maxY = 440;
     poisenBubble = false;
+    gameIsOver = false;
+
 
     playAnimation(image) {
         let i = this.currentImage % image.length;
@@ -39,6 +41,7 @@ class MovableObject extends DrawableObject {
             this.currentImage = 0;
         }
         this.attackIntervalId = setInterval(() => {
+            if (this.gameIsOver) return;
             if (this.pos >= image.length) {
                 clearInterval(this.attackIntervalId);
                 this.attackIntervalId = null;
@@ -124,12 +127,14 @@ class MovableObject extends DrawableObject {
 
     moveLeft() {
         setInterval(() => {
+            if (this.gameIsOver) return;
             this.x -= this.speed;
         }, 1000 / 60);
     };
 
     moveDirection() {
         setInterval(() => {
+            if (this.gameIsOver) return;
             if (!this.inBubble) {
                 if (this.y <= 20) {
                     this.direction = true;
@@ -158,6 +163,7 @@ class MovableObject extends DrawableObject {
 
     dead() {
         setInterval(() => {
+            if (this.gameIsOver) return;
             this.y -= 0.2;
         }, 1000 / 60);
     };
