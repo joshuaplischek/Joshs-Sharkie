@@ -60,3 +60,10 @@ window.addEventListener('keyup', (e) => {
         keyboard.D = false
     }
 });
+
+window.addEventListener('keydown', () => {
+    if (world && world.character) {
+        world.character.lastInputTime = Date.now();
+        world.character.isSleeping = false;
+    }
+});

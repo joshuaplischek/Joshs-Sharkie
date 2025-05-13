@@ -37,6 +37,12 @@ class JellyFish extends MovableObject {
         this.y = this.minY + Math.random() * (this.maxY - this.minY);
         this.speed = 0.5 + Math.random() * 0.5;
         this.animate();
+        this.offset = {
+            top: 10,
+            bottom: 15,
+            left: 0,
+            right: 0
+        }
     }
 
     animate() {

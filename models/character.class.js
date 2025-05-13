@@ -3,6 +3,8 @@ class Character extends MovableObject {
     height = 200;
     y = 150;
     speed = 7
+    lastInputTime = Date.now();
+    isSleeping = false;
     IMAGES_SWIMMING = [
         'img/1.Sharkie/1.IDLE/1.png',
         'img/1.Sharkie/1.IDLE/2.png',
@@ -95,6 +97,23 @@ class Character extends MovableObject {
         'img/1.Sharkie/4.Attack/Fin slap/8.png',
     ];
 
+    IMAGES_SLEEPING = [
+        'img/1.Sharkie/2.Long_IDLE/i1.png',
+        'img/1.Sharkie/2.Long_IDLE/I2.png',
+        'img/1.Sharkie/2.Long_IDLE/I3.png',
+        'img/1.Sharkie/2.Long_IDLE/I4.png',
+        'img/1.Sharkie/2.Long_IDLE/I5.png',
+        'img/1.Sharkie/2.Long_IDLE/I6.png',
+        'img/1.Sharkie/2.Long_IDLE/I7.png',
+        'img/1.Sharkie/2.Long_IDLE/I8.png',
+        'img/1.Sharkie/2.Long_IDLE/I9.png',
+        'img/1.Sharkie/2.Long_IDLE/I10.png',
+        'img/1.Sharkie/2.Long_IDLE/I11.png',
+        'img/1.Sharkie/2.Long_IDLE/I12.png',
+        'img/1.Sharkie/2.Long_IDLE/I13.png',
+        'img/1.Sharkie/2.Long_IDLE/I14.png',
+    ];
+
     world;
 
     constructor() {
@@ -107,6 +126,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_FIN_SLAP)
         this.loadImages(this.IMAGES_DEAD)
         this.loadImages(this.IMAGES_SHOOTING_CHARCHED_BUBBLE)
+        this.loadImages(this.IMAGES_SLEEPING)
         this.offset = {
             top: 90,
             right: 35,
@@ -134,6 +154,13 @@ class Character extends MovableObject {
             if (this.world.keyboard.DOWN && 280 > this.y && !this.isAttacking && !this.isDead()) {
                 this.y += this.speed;
             }
+
+            setInterval(() => {
+                if (Date.now() - this.lastInputTime > 15000 && !this.isSleeping) {
+                    this.isSleeping = true;
+                }
+            }, 1000);
+
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
@@ -141,6 +168,8 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.playOneTimeDeadAnimation(this.IMAGES_DEAD, 'img/1.Sharkie/6.dead/1.Poisoned/12.png')
                 this.dead()
+            } else if (this.isSleeping) {
+                this.playAnimation(this.IMAGES_SLEEPING); 
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH)
             } else if (this.isShocked()) {
@@ -176,4 +205,5 @@ class Character extends MovableObject {
             };
         }, 50);
     };
+    
 };
