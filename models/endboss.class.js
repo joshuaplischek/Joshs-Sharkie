@@ -118,6 +118,7 @@ class Endboss extends MovableObject {
       if (this.energy <= 0) {
          this.isDead();
          this.endbossIsDead = true;
+         displayWinScreen();
       }
    }
 

@@ -168,6 +168,7 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.playOneTimeDeadAnimation(this.IMAGES_DEAD, 'img/1.Sharkie/6.dead/1.Poisoned/12.png')
                 this.dead()
+                displayGameOverScreen();
             } else if (this.isSleeping) {
                 this.playAnimation(this.IMAGES_SLEEPING); 
             } else if (this.isHurt()) {
