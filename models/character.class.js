@@ -171,7 +171,7 @@ class Character extends MovableObject {
                 displayGameOverScreen();
                 setTimeout(() => {
                     this.world.gameOver()
-                }, 3000);
+                }, 2000);
             } else if (this.isSleeping) {
                 this.playAnimation(this.IMAGES_SLEEPING);
             } else if (this.isHurt()) {

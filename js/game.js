@@ -70,6 +70,8 @@ window.addEventListener('keydown', () => {
 });
 
 function restartGame() {
+    document.getElementById('tryAgainLooseImg').classList.remove('visible');
+    document.getElementById('tryAgainWinImg').classList.remove('visible');
     document.getElementById('looseEndScreen').classList.remove('active');
     document.getElementById('winEndScreen').classList.remove('active');
     const canvas = document.getElementById('canvas');
