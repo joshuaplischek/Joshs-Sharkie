@@ -135,65 +135,63 @@ class Character extends MovableObject {
         };
     };
 
+
     animate() {
-        setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.isAttacking && !this.isDead() && !this.gameIsOver) {
+        this.setStoppableInterval(() => {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.isAttacking && !this.isDead()) {
                 this.x += this.speed;
                 this.otherDirection = false;
             }
 
-            if (this.world.keyboard.LEFT && this.x > 0 && !this.isAttacking && !this.isDead() && !this.gameIsOver) {
+            if (this.world.keyboard.LEFT && this.x > 0 && !this.isAttacking && !this.isDead()) {
                 this.x -= this.speed;
                 this.otherDirection = true;
             }
 
-            if (this.world.keyboard.UP && this.y > -80 && !this.isAttacking && !this.isDead() && !this.gameIsOver) {
+            if (this.world.keyboard.UP && this.y > -80 && !this.isAttacking && !this.isDead()) {
                 this.y -= this.speed;
             }
 
-            if (this.world.keyboard.DOWN && 280 > this.y && !this.isAttacking && !this.isDead() && !this.gameIsOver) {
+            if (this.world.keyboard.DOWN && 280 > this.y && !this.isAttacking && !this.isDead()) {
                 this.y += this.speed;
             }
-
-            setInterval(() => {
-                if (this.gameIsOver) return;
-                if (Date.now() - this.lastInputTime > 15000 && !this.isSleeping && !this.gameIsOver) {
-                    this.isSleeping = true;
-                }
-            }, 1000);
-
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
-        setInterval(() => {
-            if (this.gameIsOver) return; if (this.isDead()) {
+        this.setStoppableInterval(() => {
+            if (Date.now() - this.lastInputTime > 15000 && !this.isSleeping) {
+                this.isSleeping = true;
+            }
+        }, 1000);
+
+        this.setStoppableInterval(() => {
+            if (this.isDead()) {
                 this.playOneTimeDeadAnimation(this.IMAGES_DEAD, 'img/1.Sharkie/6.dead/1.Poisoned/12.png')
                 this.dead()
                 displayGameOverScreen();
                 setTimeout(() => {
-                    this.gameOver()
+                    this.world.gameOver()
                 }, 3000);
-            } else if (this.isSleeping && !this.gameIsOver) {
+            } else if (this.isSleeping) {
                 this.playAnimation(this.IMAGES_SLEEPING);
-            } else if (this.isHurt() && !this.gameIsOver) {
+            } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH)
-            } else if (this.isShocked() && !this.gameIsOver) {
+            } else if (this.isShocked()) {
                 this.playAnimation(this.IMAGES_HURT_BY_JELLYFISH)
-            } else if (!this.isAttacking && !this.gameIsOver && this.world.keyboard.RIGHT || !this.isAttacking && this.world.keyboard.UP || !this.isAttacking && this.world.keyboard.LEFT || !this.isAttacking && this.world.keyboard.DOWN) {
+            } else if (!this.isAttacking && this.world.keyboard.RIGHT || !this.isAttacking && this.world.keyboard.UP || !this.isAttacking && this.world.keyboard.LEFT || !this.isAttacking && this.world.keyboard.DOWN) {
                 this.playAnimation(this.IMAGES_SWIMMING_FORWARD)
-            } else if (!this.isAttacking && !this.gameIsOver) {
+            } else if (!this.isAttacking) {
                 this.playAnimation(this.IMAGES_SWIMMING)
             };
         }, 150);
 
-        setInterval(() => {
-            if (this.gameIsOver) return;
-            if (this.world.keyboard.SPACE && !this.isAttacking && !this.gameIsOver) {
+        this.setStoppableInterval(() => {
+            if (this.world.keyboard.SPACE && !this.isAttacking) {
                 this.isAttacking = true;
                 this.characterAttackMove(this.IMAGES_FIN_SLAP);
             };
 
-            if (this.world.keyboard.D && !this.isAttacking && !this.poisenBubble && !this.gameIsOver) {
+            if (this.world.keyboard.D && !this.isAttacking && !this.poisenBubble) {
                 this.isAttacking = true;
                 this.characterAttackMove(this.IMAGES_SHOOTING_BUBBLE);
                 setTimeout(() => {
@@ -201,7 +199,7 @@ class Character extends MovableObject {
                 }, 450);
             };
 
-            if (this.world.keyboard.D && !this.isAttacking && this.poisenBubble && !this.gameIsOver) {
+            if (this.world.keyboard.D && !this.isAttacking && this.poisenBubble) {
                 this.isAttacking = true;
                 this.characterAttackMove(this.IMAGES_SHOOTING_CHARCHED_BUBBLE);
                 setTimeout(() => {
@@ -211,12 +209,4 @@ class Character extends MovableObject {
             };
         }, 50);
     };
-
-    gameOver() {
-        this.gameIsOver = true;
-        this.world.level.jellys.forEach(jelly => jelly.gameIsOver = true);
-        this.world.level.enemies.forEach(enemy => enemy.gameIsOver = true);
-        this.world.level.boss.forEach(boss => boss.gameIsOver = true);
-    }
-
 };

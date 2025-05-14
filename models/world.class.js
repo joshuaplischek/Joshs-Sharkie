@@ -3,6 +3,7 @@ class World {
   blubbfish = new BlubbFish();
   endboss = new Endboss();
   level = level1;
+  jelly = new JellyFish();
   canvas;
   ctx;
   keyboard;
@@ -10,6 +11,7 @@ class World {
   statusBar = new StatusBar;
   bubbleBar = new BubbleBar;
   coinbar = new CoinBar;
+  gameIsOver = false;
   shootableObjects = [];
 
   constructor(canvas, keyboard) {
@@ -51,6 +53,7 @@ class World {
     this.character.world = this;
     this.blubbfish.world = this;
     this.endboss.world = this;
+    this.jelly.world = this;
   };
 
   run() {
@@ -248,5 +251,16 @@ class World {
     mo.x = mo.x * -1;
   };
 
+  gameOver() {
+    this.character.clearAllIntervals();
+    this.level.jellys.forEach(jelly => jelly.clearAllIntervals && jelly.clearAllIntervals());
+    this.level.enemies.forEach(enemy => enemy.clearAllIntervals && enemy.clearAllIntervals());
+    this.level.boss.forEach(boss => boss.clearAllIntervals && boss.clearAllIntervals());
+  }
+
 };
+
+function restartGame() {
+
+}
 

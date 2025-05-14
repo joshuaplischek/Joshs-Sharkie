@@ -88,7 +88,6 @@ class Endboss extends MovableObject {
       this.currentImages = this.IMAGES_SPAWN;
       this.currentImage = 0;
       this.animationInterval = setInterval(() => {
-         if (this.gameIsOver) return;
          this.playAnimation(this.currentImages);
 
          if (this.currentImage >= this.IMAGES_SPAWN.length) {
@@ -101,14 +100,13 @@ class Endboss extends MovableObject {
    }
 
    animate() {
-      setInterval(() => {
-         if (this.gameIsOver) return;
+      this.setStoppableInterval(() => {
          if (this.isDead()) {
             this.playOneTimeDeadAnimation(this.IMAGES_DEFEADED_ENDBOSS, 'img/2.Enemy/3 Final Enemy/Dead/5.png');
             this.dead()
             setTimeout(() => {
-               this.character.gameOver();
-            }, 2500);
+               this.character.world.gameOver();
+            }, 500);
          }  else if (this.isHurt() && !this.endbossIsDead) {
             this.playAnimation(this.IMAGES_ENBOSS_EARN_DAMAGE);
          } else if (!this.endbossIsDead) {
@@ -136,28 +134,22 @@ class Endboss extends MovableObject {
    }
 
    moveToCharacter(character) {
-      this.moveInterval = setInterval(() => {
-         if (this.endbossIsDead) {
-            clearInterval(this.moveInterval);
-            return;
-         }
+       this.setStoppableInterval(() => {
+           if (this.endbossIsDead) {
+               return;
+           }
    
-         if (this.x < character.x) {
-            this.x += 5;
-         } else if (this.x > character.x) {
-            this.x -= 5;
-         }
-
-         if (this.y < character.y) {
-            this.y += 2;
-         } else if (this.y > character.y) {
-            this.y -= 2;
-         }
-      }, 40);
-  }
-  
-   // gameOver() {
-   //    this.gameIsOver = true;
-   //    this.character.gameOver();
-   // }
+           if (this.x < character.x) {
+               this.x += 5;
+           } else if (this.x > character.x) {
+               this.x -= 5;
+           }
+   
+           if (this.y < character.y) {
+               this.y += 2;
+           } else if (this.y > character.y) {
+               this.y -= 2;
+           }
+       }, 40, "move");
+   }
 }

@@ -54,7 +54,7 @@ class BlubbFish extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        this.setStoppableInterval(() => {
             if (this.isAngry() && !this.angryFish) {
                 this.playAnimation(this.IMAGES_AGRESSIV_BLUBBFISH)
                 this.angryFish = true;

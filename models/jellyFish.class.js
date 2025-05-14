@@ -29,6 +29,7 @@ class JellyFish extends MovableObject {
         'img/2.Enemy/2 Jelly fish/Dead/Lila/L4.png',
     ];
 
+
     constructor() {
         super().loadImage('img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png');
         this.loadImages(this.IMAGES_JELLYFISH)
@@ -46,8 +47,7 @@ class JellyFish extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
-            if (this.gameIsOver) return;
+        this.setStoppableInterval(() => {
             if (this.isDefeated()) {
                 this.playAnimation(this.IMAGES_DEAD_JELLY);
                 this.inBubble = true;

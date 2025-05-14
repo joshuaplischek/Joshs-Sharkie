@@ -13,8 +13,8 @@ class MovableObject extends DrawableObject {
     minY = 20;
     maxY = 440;
     poisenBubble = false;
-    gameIsOver = false;
-
+    intervalIds = [];
+    intervalMap = {};
 
     playAnimation(image) {
         let i = this.currentImage % image.length;
@@ -126,14 +126,14 @@ class MovableObject extends DrawableObject {
     }
 
     moveLeft() {
-        setInterval(() => {
+        this.setStoppableInterval(() => {
             if (this.gameIsOver) return;
             this.x -= this.speed;
         }, 1000 / 60);
     };
 
     moveDirection() {
-        setInterval(() => {
+        this.setStoppableInterval(() => {
             if (this.gameIsOver) return;
             if (!this.inBubble) {
                 if (this.y <= 20) {
@@ -162,9 +162,25 @@ class MovableObject extends DrawableObject {
     };
 
     dead() {
-        setInterval(() => {
+        this.setStoppableInterval(() => {
             if (this.gameIsOver) return;
             this.y -= 0.2;
         }, 1000 / 60);
     };
+
+    setStoppableInterval(func, interval, key = null) {
+        if (key && this.intervalMap[key]) {
+            clearInterval(this.intervalMap[key]);
+        }
+        let id = setInterval(func, interval);
+        if (key) this.intervalMap[key] = id;
+        this.intervalIds.push(id);
+        return id;
+    }
+
+    clearAllIntervals() {
+        this.intervalIds.forEach(id => clearInterval(id));
+        this.intervalIds = [];
+        this.intervalMap = {};
+    }
 }

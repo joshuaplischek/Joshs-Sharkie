@@ -3,6 +3,7 @@ let world;
 let keyboard = new Keyboard;
 
 function init() {
+    initLevelOne();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     console.log('My Character is', world.character);
@@ -67,3 +68,14 @@ window.addEventListener('keydown', () => {
         world.character.isSleeping = false;
     }
 });
+
+function restartGame() {
+    document.getElementById('looseEndScreen').classList.remove('active');
+    document.getElementById('winEndScreen').classList.remove('active');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (window.world) window.world.clearAllIntervals();
+    if (window.character) window.character.clearAllIntervals();
+    init();
+}
