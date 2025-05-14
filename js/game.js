@@ -8,6 +8,10 @@ function init() {
     world = new World(canvas, keyboard);
     console.log('My Character is', world.character);
     displayTitleScreen();
+    document.getElementById('tryAgainLooseImg').classList.remove('visible');
+    document.getElementById('tryAgainWinImg').classList.remove('visible');
+    document.getElementById('looseEndScreen').classList.remove('active');
+    document.getElementById('winEndScreen').classList.remove('active');
 }
 
 window.addEventListener('keydown', (e) => {
@@ -70,14 +74,11 @@ window.addEventListener('keydown', () => {
 });
 
 function restartGame() {
-    document.getElementById('tryAgainLooseImg').classList.remove('visible');
-    document.getElementById('tryAgainWinImg').classList.remove('visible');
-    document.getElementById('looseEndScreen').classList.remove('active');
-    document.getElementById('winEndScreen').classList.remove('active');
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (window.world) window.world.clearAllIntervals();
     if (window.character) window.character.clearAllIntervals();
     init();
+
 }
