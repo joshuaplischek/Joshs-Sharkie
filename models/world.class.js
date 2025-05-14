@@ -18,10 +18,8 @@ class World {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
-    this.coins = [];
     this.bottles = [];
     this.spawnBottles();
-    this.populateCoins();
     this.checkAndRefill();
     this.draw();
     this.connectCharactertoEnemies();
@@ -31,23 +29,17 @@ class World {
     this.run();
   };
 
-  populateCoins() {
-    // CollectableObjects.generateRandomCollectables(this.coins, Coin, 20, 250);
-  }
-
-  spawnBottles(){
+  spawnBottles() {
     CollectableObjects.generateRandomCollectables(this.bottles, Bottle, 10, 360, 150);
   }
 
   checkAndRefill() {
     setInterval(() => {
-      if (this.gameIsOver) return;
       if (this.bottles.length <= 0) {
         this.spawnBottles();
-      } else{ return; }
+      } else { return; }
     }, 1000);
   }
-
 
   setWorld() {
     this.character.world = this;
@@ -172,8 +164,27 @@ class World {
     });
   }
 
+  checkCollectCoin() {
+    if (!this.collectedCoins) this.collectedCoins = 0;
+
+    for (let i = this.level.coins.length - 1; i >= 0; i--) {
+      let coin = this.level.coins[i];
+      if (this.character.isColliding(coin)) {
+        this.level.coins.splice(i, 1);
+        this.coinbar.increase(20);
+        this.collectedCoins++;
+        if (this.collectedCoins >= 5) {
+          this.character.energy = 100;
+          this.statusBar.setPercentage(100);
+          this.coinbar.setPercentage(0);
+          this.collectedCoins = 0;
+        }
+      }
+    }
+  }
+
   draw() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleart
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backroundObjects);
     this.addObjectsToMap(this.level.godRays);
@@ -186,9 +197,11 @@ class World {
     this.addObjectsToMap(this.level.jellys);
     this.addObjectsToMap(this.level.boss);
     this.addObjectsToMap(this.bottles);
+    this.addObjectsToMap(this.level.coins);
     this.addToMap(this.character);
     this.addObjectsToMap(this.shootableObjects)
     this.checkCollectBottle();
+    this.checkCollectCoin();
 
     this.level.boss.forEach((boss) => {
       if (boss instanceof Endboss) {
@@ -207,7 +220,7 @@ class World {
 
   checkCollectBottle() {
     if (this.bubbleBar.percentage >= 100) {
-      this.character.poisenBubble = true; 
+      this.character.poisenBubble = true;
       return;
     }
     if (this.bubbleBar.percentage <= 0) {
@@ -234,7 +247,7 @@ class World {
       this.flipImage(mo)
     };
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    // mo.drawFrame(this.ctx); turn on to see the frames
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     };
@@ -257,10 +270,4 @@ class World {
     this.level.enemies.forEach(enemy => enemy.clearAllIntervals && enemy.clearAllIntervals());
     this.level.boss.forEach(boss => boss.clearAllIntervals && boss.clearAllIntervals());
   }
-
 };
-
-function restartGame() {
-
-}
-
