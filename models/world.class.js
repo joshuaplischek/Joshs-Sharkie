@@ -13,6 +13,17 @@ class World {
   coinbar = new CoinBar;
   gameIsOver = false;
   shootableObjects = [];
+  sounds = {
+    start: new Audio('../sounds/game start sound.mp3'),
+    coin: new Audio('../sounds/collect coin.mp3'),
+    damage: new Audio('../sounds/damage.mp3'),
+    bubble: new Audio('../sounds/bubbles.mp3'),
+    swim: new Audio('../sounds/swim.mp3'),
+    bottle: new Audio('../sounds/collect bottle.mp3'),
+    death: new Audio('../sounds/death.mp3'),
+    win: new Audio('../sounds/win sound.mp3'),
+    
+  };
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -28,6 +39,37 @@ class World {
     this.character.getRealFrame();
     this.run();
   };
+
+  playSound(name) {
+    if (this.sounds[name]) {
+      this.sounds[name].currentTime = 0;
+      this.sounds[name].play();
+    }
+  }
+
+  playSoundOnce(name) {
+    const sound = this.sounds[name];
+    if (sound && sound.paused) {
+      sound.currentTime = 0;
+      sound.play();
+    }
+  }
+
+  playSoundWhileKey(name, isPressed) {
+    const sound = this.sounds[name];
+    if (!sound) return;
+    if (isPressed) {
+      sound.loop = true;
+      if (sound.paused) {
+        sound.currentTime = 0;
+        sound.play();
+      }
+    } else {
+      sound.loop = false;
+      sound.pause();
+      sound.currentTime = 0;
+    }
+  }
 
   spawnBottles() {
     CollectableObjects.generateRandomCollectables(this.bottles, Bottle, 10, 360, 150);
@@ -97,6 +139,7 @@ class World {
       }
       if (!this.character.isAttacking && this.character.isColliding(enemy)) {
         this.character.hit();
+        // this.playSoundOnce('damage');
         this.statusBar.setPercentage(this.character.energy);
       }
     });
@@ -123,6 +166,7 @@ class World {
     this.level.jellys.forEach((jelly) => {
       if (!jelly.isDefeated() && this.character.isColliding(jelly)) {
         this.character.shock();
+        // this.playSoundOnce('damage');
         this.statusBar.setPercentage(this.character.energy);
       }
     });
@@ -159,6 +203,7 @@ class World {
     this.level.boss.forEach((boss) => {
       if (this.character.isColliding(boss)) {
         this.character.hit();
+        // this.playSoundOnce('damage');
         this.statusBar.setPercentage(this.character.energy);
       }
     });
@@ -173,6 +218,7 @@ class World {
         this.level.coins.splice(i, 1);
         this.coinbar.increase(20);
         this.collectedCoins++;
+        this.playSound('coin');
         if (this.collectedCoins >= 5) {
           this.character.energy = 100;
           this.statusBar.setPercentage(100);
@@ -229,6 +275,7 @@ class World {
 
     this.bottles.forEach((bottle, index) => {
       if (this.character.isColliding(bottle)) {
+        this.playSound('bottle');
         this.bottles.splice(index, 1);
         this.bubbleBar.increase(20);
       }

@@ -9,10 +9,10 @@
       href="./img/1.Sharkie/1.IDLE/1.png"
       type="image/x-icon"
     />
-    <link rel="stylesheet" href="./styles/title-screen.css">
+    <link rel="stylesheet" href="./styles/title-screen.css" />
     <link rel="stylesheet" href="./fonts/fonts.css" />
     <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./styles/end-screen.css">
+    <link rel="stylesheet" href="./styles/end-screen.css" />
     <script src="./js/titleScreen.js"></script>
     <script src="./models/drawable-Object.class.js"></script>
     <script src="./models/movable-obj.class.js"></script>
@@ -39,27 +39,59 @@
   </head>
   <body onload="">
     <h1>Sharkie</h1>
-
-    <canvas id="canvas" width="720px" height="480px"></canvas>
+    <div id="rotateOverlay">Bitte drehe dein Gerät ins Querformat!</div>
+    <div id="divCanvas">
+      <canvas id="canvas" width="720px" height="480px"></canvas>
+    </div>
     <div id="titleScreen">
       <div class="barriers">
         <div class="titlescreen-images">
-          <div class="sharkie"><img src="./img/1.Sharkie/1.IDLE/Prewiew.gif" alt=""></div>
-          <div class="blubbfish"><img src="./img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/Preview.gif" alt=""></div>
+          <div class="sharkie">
+            <img src="./img/1.Sharkie/1.IDLE/Prewiew.gif" alt="" />
+          </div>
+          <div class="blubbfish">
+            <img
+              src="./img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/Preview.gif"
+              alt=""
+            />
+          </div>
         </div>
-        <div class="start-button-container"><img id="startButton" onclick="init()" src="./img/6.Botones/Start/3.png" alt="" /></div>
+        <div class="start-button-container">
+          <img
+            id="startButton"
+            onclick="playStartSound(), init() "
+            src="./img/6.Botones/Start/3.png"
+            alt=""
+          />
+        </div>
       </div>
     </div>
     <div id="looseEndScreen">
-      <div id="deadSharkie"><img src="./img/1.Sharkie/6.dead/1.Poisoned/12.png" alt=""></div>
-      <div id="gameOverLine"><img src="./img/6.Botones/Tittles/Game Over/Recurso 12.png" alt=""></div>
-      <div id="tryAgainLoose" >
-        <img id="tryAgainLooseImg" class="try-again-loose" onclick="restartGame()" src="./img/6.Botones/Try again/Recurso 15.png" alt="">
+      <div id="deadSharkie">
+        <img src="./img/1.Sharkie/6.dead/1.Poisoned/12.png" alt="" />
+      </div>
+      <div id="gameOverLine">
+        <img src="./img/6.Botones/Tittles/Game Over/Recurso 12.png" alt="" />
+      </div>
+      <div id="tryAgainLoose">
+        <img
+          id="tryAgainLooseImg"
+          class="try-again-loose"
+          onclick="playStartSound(), restartGame()"
+          src="./img/6.Botones/Try again/Recurso 15.png"
+          alt=""
+        />
       </div>
     </div>
-    <div id="winEndScreen" >
+    <div id="winEndScreen">
       <div id="tryAgainWin">
-        <img id="tryAgainWinImg" class="try-again-win" onclick="restartGame()" src="./img/6.Botones/Try again/Recurso 15.png" alt="">
+        <img
+          id="tryAgainWinImg"
+          class="try-again-win"
+          onclick="playStartSound(), restartGame()"
+          src="./img/6.Botones/Try again/Recurso 15.png"
+          alt=""
+        />
       </div>
     </div>
   </body>

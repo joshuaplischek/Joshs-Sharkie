@@ -62,6 +62,7 @@ class MovableObject extends DrawableObject {
         if (this.energy < 0) {
             this.energy = 0;
         } else {
+            this.world.playSoundOnce('damage');
             this.lastHit = new Date().getTime();
         }
     };
@@ -76,6 +77,7 @@ class MovableObject extends DrawableObject {
         if (this.energy < 0) {
             this.energy = 0;
         } else {
+            this.world.playSoundOnce('damage');
             this.lastShock = new Date().getTime();
         }
     };

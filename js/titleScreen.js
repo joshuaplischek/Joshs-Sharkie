@@ -4,3 +4,8 @@ function displayTitleScreen() {
     titleScreen.style.display = 'none';
     canvas.style.display = 'block';
 }
+
+function playStartSound() {
+    let audio = new Audio('../sounds/game start sound.mp3');
+    audio.play();
+}

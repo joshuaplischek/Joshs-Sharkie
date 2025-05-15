@@ -102,6 +102,7 @@ class Endboss extends MovableObject {
    animate() {
       this.setStoppableInterval(() => {
          if (this.isDead()) {
+            this.character.world.playSoundOnce('win');
             this.playOneTimeDeadAnimation(this.IMAGES_DEFEADED_ENDBOSS, 'img/2.Enemy/3 Final Enemy/Dead/5.png');
             this.dead()
             setTimeout(() => {

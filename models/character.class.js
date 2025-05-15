@@ -142,16 +142,13 @@ class Character extends MovableObject {
                 this.x += this.speed;
                 this.otherDirection = false;
             }
-
             if (this.world.keyboard.LEFT && this.x > 0 && !this.isAttacking && !this.isDead()) {
                 this.x -= this.speed;
                 this.otherDirection = true;
             }
-
             if (this.world.keyboard.UP && this.y > -80 && !this.isAttacking && !this.isDead()) {
                 this.y -= this.speed;
             }
-
             if (this.world.keyboard.DOWN && 280 > this.y && !this.isAttacking && !this.isDead()) {
                 this.y += this.speed;
             }
@@ -166,12 +163,7 @@ class Character extends MovableObject {
 
         this.setStoppableInterval(() => {
             if (this.isDead()) {
-                this.playOneTimeDeadAnimation(this.IMAGES_DEAD, 'img/1.Sharkie/6.dead/1.Poisoned/12.png')
-                this.dead()
-                displayGameOverScreen();
-                setTimeout(() => {
-                    this.world.gameOver()
-                }, 2000);
+                this.deadcharacter();
             } else if (this.isSleeping) {
                 this.playAnimation(this.IMAGES_SLEEPING);
             } else if (this.isHurt()) {
@@ -180,6 +172,8 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT_BY_JELLYFISH)
             } else if (!this.isAttacking && this.world.keyboard.RIGHT || !this.isAttacking && this.world.keyboard.UP || !this.isAttacking && this.world.keyboard.LEFT || !this.isAttacking && this.world.keyboard.DOWN) {
                 this.playAnimation(this.IMAGES_SWIMMING_FORWARD)
+                if (world) world.playSoundWhileKey('swim', true);
+                // this.world.playSoundOnce('swim');
             } else if (!this.isAttacking) {
                 this.playAnimation(this.IMAGES_SWIMMING)
             };
@@ -194,6 +188,7 @@ class Character extends MovableObject {
             if (this.world.keyboard.D && !this.isAttacking && !this.poisenBubble) {
                 this.isAttacking = true;
                 this.characterAttackMove(this.IMAGES_SHOOTING_BUBBLE);
+                this.world.playSound('bubble');
                 setTimeout(() => {
                     this.world.checkShootingObjects();
                 }, 450);
@@ -203,10 +198,20 @@ class Character extends MovableObject {
                 this.isAttacking = true;
                 this.characterAttackMove(this.IMAGES_SHOOTING_CHARCHED_BUBBLE);
                 setTimeout(() => {
+                    this.world.playSound('bubble');
                     this.world.checkChargedBuuble();
-
                 }, 450);
             };
         }, 50);
     };
+
+    deadcharacter() {
+        this.world.playSoundOnce('death');
+        this.playOneTimeDeadAnimation(this.IMAGES_DEAD, 'img/1.Sharkie/6.dead/1.Poisoned/12.png')
+        this.dead()
+        displayGameOverScreen();
+        setTimeout(() => {
+            this.world.gameOver()
+        }, 2000);
+    }
 };
