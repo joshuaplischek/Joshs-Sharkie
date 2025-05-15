@@ -4,9 +4,10 @@ canvas {
 }
 
 #divCanvas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   display: none;
-  width: 720px;
-  height: 480px;
 }
 
 #rotateOverlay {
@@ -39,23 +40,43 @@ h1 {
   font-size: 64px;
 }
 
-@media screen and (orientation: portrait) {
+@media screen and (orientation: portrait) and (max-width: 720px) {
   #rotateOverlay {
     display: flex;
-  }
-
-  body {
-    overflow: hidden;
-  }
-
-#titleScreen {
-    display: none;
   }
 
   canvas {
     display: none;
   }
+
+  #divCanvas {
+    display: none;
+  }
+
+  #titleScreen {
+    display: none;
+  }
+
+  #winEndScreen {
+    display: none;
+  }
+
+  #looseEndScreen {
+    display: none;
+  }
 }
 
-@media screen and (orientation: landscape) {
+@media screen and (orientation: landscape) and (max-height: 720px) {
+  h1 {
+    display: none;
+  }
+
+  #titleScreen {
+    width: 100%;
+    height: 100%;
+  }
+
+  canvas {
+    max-height: 100vh;
+  }
 }
