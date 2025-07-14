@@ -80,3 +80,43 @@ h1 {
     max-height: 100vh;
   }
 }
+
+.pauseButtonContainer{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#pauseButton{
+  height: 50px;
+  width: 50px;
+  filter: contrast(1.5);
+}
+
+#pauseButton:hover{
+  filter: contrast(1);
+  cursor: pointer;
+}
+
+#pauseOverlay {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  font-size: 2em;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 25px;
+  img{
+    height: 75px;
+  }
+}
+
+#resumeButton:hover{
+  cursor: pointer;
+  filter: contrast(1.2);
+}

@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard;
+let isPaused = false;
 
 function init() {
     initLevelOne();
@@ -84,6 +85,28 @@ window.addEventListener('keydown', () => {
     }
 });
 
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('pauseButton').addEventListener('click', () => {
+        isPaused = !isPaused;
+        document.getElementById('pauseOverlay').style.display = isPaused ? 'flex' : 'none';
+        if (world) {
+            if (isPaused) {
+                world.pauseGame();
+            } else {
+                world.resumeGame();
+            }
+        }
+    });
+
+    document.getElementById('resumeButton').addEventListener('click', () => {
+        isPaused = false;
+        document.getElementById('pauseOverlay').style.display = 'none';
+        if (world) {
+            world.resumeGame();
+        }
+    });
+});
+
 function restartGame() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
@@ -92,4 +115,15 @@ function restartGame() {
     if (window.character) window.character.clearAllIntervals();
     init();
 
+}
+
+// In deiner World-Klasse, in der run()-Methode:
+function run() {
+    setInterval(() => {
+        if (this.gameIsOver || window.isPaused) return;
+        this.character.getRealFrame();
+        this.checkCollisionsBlubbfish();
+        this.checkCollisionsJellyFish();
+        this.checkCollisionsEndboss();
+    }, 200);
 }

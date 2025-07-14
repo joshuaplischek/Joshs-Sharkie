@@ -22,7 +22,7 @@ class World {
     bottle: new Audio('../sounds/collect bottle.mp3'),
     death: new Audio('../sounds/death.mp3'),
     win: new Audio('../sounds/win sound.mp3'),
-    
+
   };
 
   constructor(canvas, keyboard) {
@@ -316,5 +316,23 @@ class World {
     this.level.jellys.forEach(jelly => jelly.clearAllIntervals && jelly.clearAllIntervals());
     this.level.enemies.forEach(enemy => enemy.clearAllIntervals && enemy.clearAllIntervals());
     this.level.boss.forEach(boss => boss.clearAllIntervals && boss.clearAllIntervals());
+  }
+
+  pauseGame() {
+    this.character.clearAllIntervals();
+    this.level.enemies.forEach(enemy => enemy.clearAllIntervals && enemy.clearAllIntervals());
+    this.level.jellys.forEach(jelly => jelly.clearAllIntervals && jelly.clearAllIntervals());
+    this.level.boss.forEach(boss => boss.clearAllIntervals && boss.clearAllIntervals());
+    this.bottles.forEach(bottle => bottle.clearAllIntervals && bottle.clearAllIntervals());
+    this.shootableObjects.forEach(obj => obj.clearAllIntervals && obj.clearAllIntervals());
+  }
+
+  resumeGame() {
+    this.character.animate();
+    this.level.enemies.forEach(enemy => enemy.animate && enemy.animate());
+    this.level.jellys.forEach(jelly => jelly.animate && jelly.animate());
+    this.level.boss.forEach(boss => boss.animate && boss.animate());
+    this.bottles.forEach(bottle => bottle.animate && bottle.animate());
+    this.shootableObjects.forEach(obj => obj.animate && obj.animate());
   }
 };
