@@ -154,3 +154,12 @@ function run() {
         this.checkCollisionsEndboss();
     }, 200);
 }
+
+function showControls() {
+    const overlay = document.getElementById('controlsOverlay');
+    overlay.style.display = 'flex';
+    // Schließen bei Klick irgendwo ins Overlay
+    overlay.onclick = function() {
+        overlay.style.display = 'none';
+    };
+}

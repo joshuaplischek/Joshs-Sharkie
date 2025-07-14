@@ -39,17 +39,25 @@
   </head>
   <body onload="">
     <h1>Sharkie</h1>
-    <div id="rotateOverlay">Bitte drehe dein Gerät ins Querformat!</div>
+    <div id="rotateOverlay">Please rotate your Gerät ins Querformat!</div>
     <div id="divCanvas">
       <div id="pauseButtonContainer">
-        <div>
-        <img id="muteButton" src="img/6.Botones/sound-on-removebg-preview.png" alt="button to mute">
-        </div>
-        <img id="pauseButton" src="img/6.Botones/pause-button-removebg-preview.png" alt="pause button image">
+        <img
+          id="pauseButton"
+          src="img/6.Botones/pause-button-removebg-preview.png"
+          alt="pause button image"
+        />
       </div>
       <div id="pauseOverlay">
+        <div>
+          <img
+            id="muteButton"
+            src="img/6.Botones/sound-on-removebg-preview.png"
+            alt="button to mute"
+          />
+        </div>
         <p>PAUSE</p>
-        <img id="resumeButton" src="img/6.Botones/Start/2.png" alt="">
+        <img id="resumeButton" src="img/6.Botones/Start/2.png" alt="" />
       </div>
       <canvas id="canvas" width="720px" height="480px"></canvas>
     </div>
@@ -74,6 +82,28 @@
             alt=""
           />
         </div>
+        <!-- Controls-Button -->
+        <div id="controls" onclick="showControls()">Controls</div>
+      </div>
+    </div>
+    <!-- Controls-Overlay -->
+    <div id="controlsOverlay">
+      <div class="controls-content">
+        <div>
+          <div class="controls-container arrows">
+            <img src="img/6.Botones/Key/arrow keys.png" alt="" />
+            <p>Move</p>
+          </div>
+          <div class="controls-container space">
+            <img src="img/6.Botones/Key/Space Bar key.png" alt="" />
+            <p>Fin Slap</p>
+          </div>
+          <div class="controls-container d">
+            <img src="img/6.Botones/Key/D key.png" alt="" />
+            <p>Bubble Shot</p>
+          </div>
+        </div>
+        <p class="controls-hint">Click anywhere to close the overlay.</p>
       </div>
     </div>
     <div id="looseEndScreen">

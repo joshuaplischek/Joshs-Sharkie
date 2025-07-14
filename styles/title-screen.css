@@ -46,3 +46,70 @@
 .blubbfish img{
     height: 100px;
 }
+
+#controls{
+    margin-top: 50px;
+    font-size: 2rem;
+}
+
+#controls:hover{
+    cursor: pointer;
+}
+
+.controls-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 700px;
+    p{
+        width: 200px;
+        text-align: center;
+    }
+}
+
+.arrows{
+    img{
+        height: 120px;
+    }
+}
+
+.space{
+    img{
+        height: 50px;
+    }
+}
+
+.d{
+    img{
+        height: 80px;
+    }
+}
+
+#controlsOverlay {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.932);
+  color: white;
+  font-size: 2em;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls-content {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.controls-hint {
+  font-size: 1em;
+  opacity: 0.7;
+}
