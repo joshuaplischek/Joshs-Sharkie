@@ -43,11 +43,13 @@
 }
 
 #winEndScreen.active {
+  display: flex;
   opacity: 1;
   pointer-events: auto;
 }
 
 #looseEndScreen.active {
+  display: flex;
   opacity: 1;
   pointer-events: auto;
 }

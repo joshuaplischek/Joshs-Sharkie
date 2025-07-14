@@ -2,12 +2,14 @@ let canvas;
 let world;
 let keyboard = new Keyboard;
 let isPaused = false;
+let isMuted = localStorage.getItem('isMuted') === 'true';
 
 function init() {
     initLevelOne();
     canvas = document.getElementById('canvas');
     canvasDiv = document.getElementById('divCanvas');
     world = new World(canvas, keyboard);
+    updateMuteState();
     console.log('My Character is', world.character);
     displayTitleScreen();
     document.getElementById('tryAgainLooseImg').classList.remove('visible');
@@ -105,11 +107,36 @@ window.addEventListener('DOMContentLoaded', () => {
             world.resumeGame();
         }
     });
+
+    const muteBtn = document.getElementById('muteButton');
+    if (muteBtn) {
+        muteBtn.addEventListener('click', () => {
+            isMuted = !isMuted;
+            localStorage.setItem('isMuted', isMuted);
+            updateMuteState();
+        });
+        updateMuteState();
+    }
 });
+
+function updateMuteState() {
+    if (world && world.sounds) {
+        Object.values(world.sounds).forEach(audio => {
+            audio.muted = isMuted;
+        });
+    }
+    // Optional: Icon ändern
+    const muteBtn = document.getElementById('muteButton');
+    if (muteBtn) {
+        muteBtn.src = isMuted ? 'img/6.Botones/sound-off-removebg-preview.png' : 'img/6.Botones/sound-on-removebg-preview.png';
+    }
+}
 
 function restartGame() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+    let pauseButton = document.getElementById('pauseButtonContainer');
+    pauseButton.style.display = 'flex';
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (window.world) window.world.clearAllIntervals();
     if (window.character) window.character.clearAllIntervals();
