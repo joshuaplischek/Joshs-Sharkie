@@ -124,3 +124,9 @@
   visibility: visible;
   pointer-events: auto;
 }
+
+@media screen and (orientation: landscape) and (max-height: 720px) {
+    #looseEndScreen, #winEndScreen {
+      margin-top: 0;
+    }
+}

@@ -1,7 +1,9 @@
 function displayGameOverScreen() {
     let looseScreen = document.getElementById('looseEndScreen');
     let pauseButton = document.getElementById('pauseButtonContainer');
+    let touchOverlay = document.getElementById('touchOverlay');
     pauseButton.style.display = 'none';
+    if (touchOverlay) touchOverlay.style.display = 'none';
     looseScreen.classList.add('active');
     setTimeout(() => {
         document.getElementById('tryAgainLooseImg').classList.add('visible');
@@ -11,7 +13,9 @@ function displayGameOverScreen() {
 function displayWinScreen() {
     let winScreen = document.getElementById('winEndScreen');
     let pauseButton = document.getElementById('pauseButtonContainer');
+    let touchOverlay = document.getElementById('touchOverlay');
     pauseButton.style.display = 'none';
+    if (touchOverlay) touchOverlay.style.display = 'none';
     winScreen.classList.add('active');
     setTimeout(() => {
         document.getElementById('tryAgainWinImg').classList.add('visible');

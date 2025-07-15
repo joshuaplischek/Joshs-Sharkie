@@ -208,10 +208,12 @@ class Character extends MovableObject {
     deadcharacter() {
         this.world.playSoundOnce('death');
         this.playOneTimeDeadAnimation(this.IMAGES_DEAD, 'img/1.Sharkie/6.dead/1.Poisoned/12.png')
-        this.dead()
+        this.dead();
         displayGameOverScreen();
+        document.getElementById('pauseButtonContainer').style.display = 'none';
+        document.getElementById('touchOverlay').style.display = 'none';
         setTimeout(() => {
-            this.world.gameOver()
+            this.world.gameOver();
         }, 2000);
     }
 };

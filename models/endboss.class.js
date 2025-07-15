@@ -125,6 +125,8 @@ class Endboss extends MovableObject {
          this.isDead();
          this.endbossIsDead = true;
          displayWinScreen();
+         document.getElementById('pauseButtonContainer').style.display = 'none';
+         document.getElementById('touchOverlay').style.display = 'none';
       }
    }
 

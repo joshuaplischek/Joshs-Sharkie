@@ -117,6 +117,8 @@ window.addEventListener('DOMContentLoaded', () => {
         });
         updateMuteState();
     }
+
+    setupTouchControls();
 });
 
 function updateMuteState() {
@@ -132,11 +134,24 @@ function updateMuteState() {
     }
 }
 
+function displayGameOverScreen() {
+    document.getElementById('looseEndScreen').classList.add('active');
+    document.getElementById('pauseButtonContainer').style.display = 'none';
+    document.getElementById('touchOverlay').style.display = 'none';
+}
+
+function displayWinScreen() {
+    document.getElementById('winEndScreen').classList.add('active');
+    document.getElementById('pauseButtonContainer').style.display = 'none';
+    document.getElementById('touchOverlay').style.display = 'none';
+}
+
 function restartGame() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     let pauseButton = document.getElementById('pauseButtonContainer');
     pauseButton.style.display = 'flex';
+    document.getElementById('touchOverlay').style.display = '';
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (window.world) window.world.clearAllIntervals();
     if (window.character) window.character.clearAllIntervals();
@@ -144,7 +159,6 @@ function restartGame() {
 
 }
 
-// In deiner World-Klasse, in der run()-Methode:
 function run() {
     setInterval(() => {
         if (this.gameIsOver || window.isPaused) return;
@@ -158,8 +172,52 @@ function run() {
 function showControls() {
     const overlay = document.getElementById('controlsOverlay');
     overlay.style.display = 'flex';
-    // Schließen bei Klick irgendwo ins Overlay
     overlay.onclick = function() {
         overlay.style.display = 'none';
     };
+}
+
+function setupTouchControls() {
+  function wakeUpCharacter() {
+    if (world && world.character) {
+      world.character.lastInputTime = Date.now();
+      world.character.isSleeping = false;
+    }
+  }
+
+  document.getElementById('touchLeft').addEventListener('touchstart', () => {
+    keyboard.LEFT = true;
+    wakeUpCharacter();
+  });
+  document.getElementById('touchLeft').addEventListener('touchend', () => keyboard.LEFT = false);
+
+  document.getElementById('touchRight').addEventListener('touchstart', () => {
+    keyboard.RIGHT = true;
+    wakeUpCharacter();
+  });
+  document.getElementById('touchRight').addEventListener('touchend', () => keyboard.RIGHT = false);
+
+  document.getElementById('touchUp').addEventListener('touchstart', () => {
+    keyboard.UP = true;
+    wakeUpCharacter();
+  });
+  document.getElementById('touchUp').addEventListener('touchend', () => keyboard.UP = false);
+
+  document.getElementById('touchDown').addEventListener('touchstart', () => {
+    keyboard.DOWN = true;
+    wakeUpCharacter();
+  });
+  document.getElementById('touchDown').addEventListener('touchend', () => keyboard.DOWN = false);
+
+  document.getElementById('touchAttack').addEventListener('touchstart', () => {
+    keyboard.SPACE = true;
+    wakeUpCharacter();
+  });
+  document.getElementById('touchAttack').addEventListener('touchend', () => keyboard.SPACE = false);
+
+  document.getElementById('touchBubble').addEventListener('touchstart', () => {
+    keyboard.D = true;
+    wakeUpCharacter();
+  });
+  document.getElementById('touchBubble').addEventListener('touchend', () => keyboard.D = false);
 }
