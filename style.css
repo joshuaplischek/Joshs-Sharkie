@@ -86,10 +86,12 @@ h1 {
   display: flex;
   justify-content: end;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 #pauseButton{
+  position: absolute;
+  top: 13%;
+  right: 3%;
   height: 50px;
   width: 50px;
   filter: contrast(1.5);
