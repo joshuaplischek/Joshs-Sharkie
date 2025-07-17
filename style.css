@@ -6,6 +6,13 @@ canvas {
 html {
   height: 100%;
   overflow: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 #divCanvas {
@@ -103,7 +110,7 @@ h1 {
   align-items: center;
 }
 
-#pauseButton{
+#pauseButton {
   position: absolute;
   top: 13%;
   right: 3%;
@@ -214,7 +221,7 @@ h1 {
     display: block;
   }
 
-  #pauseButton{
+  #pauseButton {
     position: absolute;
     top: 15%;
     right: 3%;
