@@ -152,11 +152,11 @@ class Character extends MovableObject {
             if (this.world.keyboard.DOWN && 280 > this.y && !this.isAttacking && !this.isDead()) {
                 this.y += this.speed;
             }
-            this.world.camera_x = -this.x + 100;
+            this.world.camera_x = -this.x + 150;
         }, 1000 / 60);
 
         this.setStoppableInterval(() => {
-            if (Date.now() - this.lastInputTime > 15000 && !this.isSleeping) {
+            if (Date.now() - this.lastInputTime > 5000 && !this.isSleeping) {
                 this.isSleeping = true;
             }
         }, 1000);
@@ -212,6 +212,8 @@ class Character extends MovableObject {
         displayGameOverScreen();
         document.getElementById('pauseButtonContainer').style.display = 'none';
         document.getElementById('touchOverlay').style.display = 'none';
+        this.world.sounds.music.pause();
+        this.world.sounds.music.currentTime = 0;
         setTimeout(() => {
             this.world.gameOver();
         }, 2000);

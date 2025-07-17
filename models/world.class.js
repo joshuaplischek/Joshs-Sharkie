@@ -22,7 +22,7 @@ class World {
     bottle: new Audio('../sounds/collect bottle.mp3'),
     death: new Audio('../sounds/death.mp3'),
     win: new Audio('../sounds/win sound.mp3'),
-
+    music: new Audio('../sounds/backround-music.mp3'), // Hintergrundmusik
   };
 
   constructor(canvas, keyboard) {
@@ -38,6 +38,8 @@ class World {
     this.character.animate();
     this.character.getRealFrame();
     this.run();
+    this.sounds.music.loop = true; // Musik soll sich wiederholen
+    this.sounds.music.volume = 0.25; // Lautstärke auf 50%
   };
 
   playSound(name) {
@@ -331,8 +333,17 @@ class World {
     this.character.animate();
     this.level.enemies.forEach(enemy => enemy.animate && enemy.animate());
     this.level.jellys.forEach(jelly => jelly.animate && jelly.animate());
-    this.level.boss.forEach(boss => boss.animate && boss.animate());
-    this.bottles.forEach(bottle => bottle.animate && bottle.animate());
+    this.level.boss.forEach(boss => {
+        boss.animate && boss.animate();
+        // Endboss folgt nur, wenn er wirklich gespawnt ist!
+        if (
+            boss instanceof Endboss &&
+            !boss.endbossIsDead &&
+            boss.isSpawned
+        ) {
+            boss.moveToCharacter(this.character);
+        }
+    });
     this.shootableObjects.forEach(obj => obj.animate && obj.animate());
-  }
+}
 };

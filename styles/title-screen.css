@@ -114,3 +114,13 @@
   font-size: 1em;
   opacity: 0.7;
 }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.coins-Introduction{
+    text-align: center;
+    animation: blink 2s ease-in-out infinite;
+}

@@ -60,6 +60,9 @@ class Endboss extends MovableObject {
       'img/2.Enemy/3 Final Enemy/Hurt/4.png',
    ];
 
+   isSpawned = false; // NEU
+   isVisible = false; // NEU
+
    constructor() {
       super().loadImage(this.IMAGES_SPAWN[0]);
       this.loadImages(this.IMAGES_SPAWN)
@@ -74,6 +77,7 @@ class Endboss extends MovableObject {
          bottom: 50,
          left: 20,
       };
+      this.isVisible = false; // Boss ist anfangs unsichtbar
    }
 
    checkCharacterPosition(character) {
@@ -85,6 +89,7 @@ class Endboss extends MovableObject {
 
    spawnEndboss(character) {
       this.character = character;
+      this.isVisible = true; // Boss wird sichtbar, aber noch nicht aktiv
       this.currentImages = this.IMAGES_SPAWN;
       this.currentImage = 0;
       this.animationInterval = setInterval(() => {
@@ -92,15 +97,32 @@ class Endboss extends MovableObject {
 
          if (this.currentImage >= this.IMAGES_SPAWN.length) {
             clearInterval(this.animationInterval);
-            this.animate();
+            this.isSpawned = true; // Boss ist jetzt aktiv!
+            this.animate(); // Schwimm-Animation starten
+            this.moveToCharacter(character); // Boss folgt jetzt dem Spieler!
          }
       }, 150);
-      this.moveToCharacter(world.character);
+   }
 
+   clearAllIntervals() {
+      if (this.animationInterval) {
+          clearInterval(this.animationInterval);
+          this.animationInterval = null;
+      }
+      if (this.moveInterval) {
+          clearInterval(this.moveInterval);
+          this.moveInterval = null;
+      }
+      if (this.stoppableIntervals) {
+          this.stoppableIntervals.forEach(id => clearInterval(id));
+          this.stoppableIntervals = [];
+      }
    }
 
    animate() {
-      this.setStoppableInterval(() => {
+      if (!this.isSpawned) return; // Animation nur, wenn wirklich gespawnt!
+      this.clearAllIntervals();
+      this.animationInterval = this.setStoppableInterval(() => {
          if (this.isDead()) {
             this.character.world.playSoundOnce('win');
             this.playOneTimeDeadAnimation(this.IMAGES_DEFEADED_ENDBOSS, 'img/2.Enemy/3 Final Enemy/Dead/5.png');
@@ -120,13 +142,14 @@ class Endboss extends MovableObject {
       this.energy -= amount;
       if (this.energy < 0) this.energy = 0;
       this.lastHit = new Date().getTime();
-      console.log('Energy:', this.energy);
       if (this.energy <= 0) {
          this.isDead();
          this.endbossIsDead = true;
          displayWinScreen();
          document.getElementById('pauseButtonContainer').style.display = 'none';
          document.getElementById('touchOverlay').style.display = 'none';
+         this.character.world.sounds.music.pause();
+         this.character.world.sounds.music.currentTime = 0;
       }
    }
 
@@ -136,23 +159,19 @@ class Endboss extends MovableObject {
       return timepassed < 0.5;
    }
 
+   draw(ctx) {
+      if (!this.isVisible) return; // Nur zeichnen, wenn sichtbar
+      super.draw(ctx);
+   }
+
    moveToCharacter(character) {
-       this.setStoppableInterval(() => {
-           if (this.endbossIsDead) {
-               return;
-           }
-   
-           if (this.x < character.x) {
-               this.x += 5;
-           } else if (this.x > character.x) {
-               this.x -= 5;
-           }
-   
-           if (this.y < character.y) {
-               this.y += 2;
-           } else if (this.y > character.y) {
-               this.y -= 2;
-           }
-       }, 40, "move");
+      if (!this.isSpawned) return; // Bewegung nur, wenn wirklich gespawnt!
+      this.moveInterval = this.setStoppableInterval(() => {
+         if (this.endbossIsDead) return;
+         if (this.x < character.x) this.x += 5;
+         else if (this.x > character.x) this.x -= 5;
+         if (this.y < character.y) this.y += 2;
+         else if (this.y > character.y) this.y -= 2;
+      }, 40, "move");
    }
 }

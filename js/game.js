@@ -10,7 +10,7 @@ function init() {
     canvasDiv = document.getElementById('divCanvas');
     world = new World(canvas, keyboard);
     updateMuteState();
-    console.log('My Character is', world.character);
+    world.sounds.music.play(); // Musik starten
     displayTitleScreen();
     document.getElementById('tryAgainLooseImg').classList.remove('visible');
     document.getElementById('tryAgainWinImg').classList.remove('visible');
@@ -138,12 +138,14 @@ function displayGameOverScreen() {
     document.getElementById('looseEndScreen').classList.add('active');
     document.getElementById('pauseButtonContainer').style.display = 'none';
     document.getElementById('touchOverlay').style.display = 'none';
+
 }
 
 function displayWinScreen() {
     document.getElementById('winEndScreen').classList.add('active');
     document.getElementById('pauseButtonContainer').style.display = 'none';
     document.getElementById('touchOverlay').style.display = 'none';
+
 }
 
 function restartGame() {
@@ -220,4 +222,12 @@ function setupTouchControls() {
     wakeUpCharacter();
   });
   document.getElementById('touchBubble').addEventListener('touchend', () => keyboard.D = false);
+}
+
+function openLegalNoticeOverlay() {
+  document.getElementById('legalNoticeOverlay').style.display = 'flex';
+}
+
+function closeLegalNoticeOverlay() {
+  document.getElementById('legalNoticeOverlay').style.display = 'none';
 }
