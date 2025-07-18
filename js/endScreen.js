@@ -4,10 +4,13 @@ function displayGameOverScreen() {
     let touchOverlay = document.getElementById('touchOverlay');
     pauseButton.style.display = 'none';
     if (touchOverlay) touchOverlay.style.display = 'none';
-    looseScreen.classList.add('active');
     setTimeout(() => {
-        document.getElementById('tryAgainLooseImg').classList.add('visible');
-    }, 2500);
+        looseScreen.classList.add('active');
+        setTimeout(() => {
+            document.getElementById('tryAgainLooseImg').classList.add('visible');
+            document.getElementById('homeButton').classList.add('visible');
+        }, 2500);
+    }, 1500);
 }
 
 function displayWinScreen() {
@@ -16,9 +19,12 @@ function displayWinScreen() {
     let touchOverlay = document.getElementById('touchOverlay');
     pauseButton.style.display = 'none';
     if (touchOverlay) touchOverlay.style.display = 'none';
-    winScreen.classList.add('active');
     setTimeout(() => {
-        document.getElementById('tryAgainWinImg').classList.add('visible');
-    }, 2500);
+        winScreen.classList.add('active');
+        setTimeout(() => {
+            document.getElementById('tryAgainWinImg').classList.add('visible');
+            document.getElementById('homeButton').classList.add('visible');
+        }, 2500);
+    }, 1500); 
 }
 

@@ -134,19 +134,19 @@ function updateMuteState() {
     }
 }
 
-function displayGameOverScreen() {
-    document.getElementById('looseEndScreen').classList.add('active');
-    document.getElementById('pauseButtonContainer').style.display = 'none';
-    document.getElementById('touchOverlay').style.display = 'none';
+// function displayGameOverScreen() {
+//     document.getElementById('looseEndScreen').classList.add('active');
+//     document.getElementById('pauseButtonContainer').style.display = 'none';
+//     document.getElementById('touchOverlay').style.display = 'none';
 
-}
+// }
 
-function displayWinScreen() {
-    document.getElementById('winEndScreen').classList.add('active');
-    document.getElementById('pauseButtonContainer').style.display = 'none';
-    document.getElementById('touchOverlay').style.display = 'none';
+// function displayWinScreen() {
+//     document.getElementById('winEndScreen').classList.add('active');
+//     document.getElementById('pauseButtonContainer').style.display = 'none';
+//     document.getElementById('touchOverlay').style.display = 'none';
 
-}
+// }
 
 function restartGame() {
     const canvas = document.getElementById('canvas');
@@ -230,4 +230,16 @@ function openLegalNoticeOverlay() {
 
 function closeLegalNoticeOverlay() {
   document.getElementById('legalNoticeOverlay').style.display = 'none';
+}
+
+function backHome() {
+    // Endscreens ausblenden
+    document.getElementById('winEndScreen').classList.remove('active');
+    document.getElementById('looseEndScreen').classList.remove('active');
+    // Title-Screen anzeigen
+    document.getElementById('titleScreen').style.display = 'block';
+    // Canvas ausblenden
+    document.getElementById('divCanvas').style.display = 'none';
+    // Pause-Button wieder sichtbar machen
+    document.getElementById('pauseButtonContainer').style.display = 'flex';
 }
