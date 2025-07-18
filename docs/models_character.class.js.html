@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/character.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/character.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Defines the Character class, representing the player character Sharkie.
+ * Handles movement, animation, attack logic, death, and interaction with the game world.
+ * @author Joshua Plischek
+ */
+
+/**
+ * Represents the player character Sharkie in the game world.
+ * Inherits from MovableObject.
+ */
+class Character extends MovableObject {
+    /**
+     * The width of Sharkie.
+     * @type {number}
+     */
+    width = 200;
+
+    /**
+     * The height of Sharkie.
+     * @type {number}
+     */
+    height = 200;
+
+    /**
+     * The vertical position of Sharkie.
+     * @type {number}
+     */
+    y = 150;
+
+    /**
+     * The movement speed of Sharkie.
+     * @type {number}
+     */
+    speed = 7;
+
+    /**
+     * Timestamp of the last input for sleep logic.
+     * @type {number}
+     */
+    lastInputTime = Date.now();
+
+    /**
+     * Indicates if Sharkie is currently sleeping.
+     * @type {boolean}
+     */
+    isSleeping = false;
+
+    IMAGES_SWIMMING = [
+        'img/1.Sharkie/1.IDLE/1.png',
+        'img/1.Sharkie/1.IDLE/2.png',
+        'img/1.Sharkie/1.IDLE/3.png',
+        'img/1.Sharkie/1.IDLE/4.png',
+        'img/1.Sharkie/1.IDLE/5.png',
+        'img/1.Sharkie/1.IDLE/6.png',
+        'img/1.Sharkie/1.IDLE/7.png',
+        'img/1.Sharkie/1.IDLE/8.png',
+        'img/1.Sharkie/1.IDLE/9.png',
+        'img/1.Sharkie/1.IDLE/10.png',
+        'img/1.Sharkie/1.IDLE/11.png',
+        'img/1.Sharkie/1.IDLE/12.png',
+        'img/1.Sharkie/1.IDLE/13.png',
+        'img/1.Sharkie/1.IDLE/14.png',
+        'img/1.Sharkie/1.IDLE/15.png',
+        'img/1.Sharkie/1.IDLE/16.png',
+        'img/1.Sharkie/1.IDLE/17.png',
+        'img/1.Sharkie/1.IDLE/18.png'
+    ];
+
+    IMAGES_SWIMMING_FORWARD = [
+        'img/1.Sharkie/3.Swim/1.png',
+        'img/1.Sharkie/3.Swim/2.png',
+        'img/1.Sharkie/3.Swim/3.png',
+        'img/1.Sharkie/3.Swim/4.png',
+        'img/1.Sharkie/3.Swim/5.png',
+        'img/1.Sharkie/3.Swim/6.png',
+    ];
+
+    IMAGES_DEAD = [
+        'img/1.Sharkie/6.dead/1.Poisoned/1.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/2.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/3.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/4.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/5.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/6.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/7.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/8.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/9.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/10.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/11.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/12.png',
+    ];
+
+    IMAGES_HURT_BY_BLUBBFISH = [
+        'img/1.Sharkie/5.Hurt/1.Poisoned/1.png',
+        'img/1.Sharkie/5.Hurt/1.Poisoned/2.png',
+        'img/1.Sharkie/5.Hurt/1.Poisoned/3.png',
+        'img/1.Sharkie/5.Hurt/1.Poisoned/4.png',
+        'img/1.Sharkie/5.Hurt/1.Poisoned/5.png',
+    ];
+
+    IMAGES_HURT_BY_JELLYFISH = [
+        'img/1.Sharkie/5.Hurt/2.Electric shock/1.png',
+        'img/1.Sharkie/5.Hurt/2.Electric shock/2.png',
+        'img/1.Sharkie/5.Hurt/2.Electric shock/3.png',
+    ];
+
+    IMAGES_SHOOTING_BUBBLE = [
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/4.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/5.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/6.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png',
+    ];
+
+    IMAGES_SHOOTING_CHARCHED_BUBBLE = [
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/3.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/4.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/5.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/6.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png',
+    ];
+
+    IMAGES_FIN_SLAP = [
+        'img/1.Sharkie/4.Attack/Fin slap/1.png',
+        'img/1.Sharkie/4.Attack/Fin slap/2.png',
+        'img/1.Sharkie/4.Attack/Fin slap/3.png',
+        'img/1.Sharkie/4.Attack/Fin slap/4.png',
+        'img/1.Sharkie/4.Attack/Fin slap/5.png',
+        'img/1.Sharkie/4.Attack/Fin slap/6.png',
+        'img/1.Sharkie/4.Attack/Fin slap/7.png',
+        'img/1.Sharkie/4.Attack/Fin slap/8.png',
+    ];
+
+    IMAGES_SLEEPING = [
+        'img/1.Sharkie/2.Long_IDLE/i1.png',
+        'img/1.Sharkie/2.Long_IDLE/I2.png',
+        'img/1.Sharkie/2.Long_IDLE/I3.png',
+        'img/1.Sharkie/2.Long_IDLE/I4.png',
+        'img/1.Sharkie/2.Long_IDLE/I5.png',
+        'img/1.Sharkie/2.Long_IDLE/I6.png',
+        'img/1.Sharkie/2.Long_IDLE/I7.png',
+        'img/1.Sharkie/2.Long_IDLE/I8.png',
+        'img/1.Sharkie/2.Long_IDLE/I9.png',
+        'img/1.Sharkie/2.Long_IDLE/I10.png',
+        'img/1.Sharkie/2.Long_IDLE/I11.png',
+        'img/1.Sharkie/2.Long_IDLE/I12.png',
+        'img/1.Sharkie/2.Long_IDLE/I13.png',
+        'img/1.Sharkie/2.Long_IDLE/I14.png',
+    ];
+
+    /**
+     * Reference to the game world.
+     * @type {World}
+     */
+    world;
+
+    /**
+     * Creates a new Character instance, loads images, and sets up offsets.
+     */
+    constructor() {
+        super().loadImage('img/1.Sharkie/1.IDLE/1.png');
+        this.loadImages(this.IMAGES_SWIMMING);
+        this.loadImages(this.IMAGES_SWIMMING_FORWARD);
+        this.loadImages(this.IMAGES_HURT_BY_JELLYFISH);
+        this.loadImages(this.IMAGES_HURT_BY_BLUBBFISH);
+        this.loadImages(this.IMAGES_SHOOTING_BUBBLE);
+        this.loadImages(this.IMAGES_FIN_SLAP);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_SHOOTING_CHARCHED_BUBBLE);
+        this.loadImages(this.IMAGES_SLEEPING);
+        this.offset = {
+            top: 90,
+            right: 35,
+            bottom: 40,
+            left: 40,
+        };
+    }
+
+    /**
+     * Starts all animation and movement intervals for Sharkie.
+     */
+    animate() {
+        // Movement interval
+        this.setStoppableInterval(() => {
+            if (this.world.keyboard.RIGHT &amp;&amp; this.x &lt; this.world.level.level_end_x &amp;&amp; !this.isAttacking &amp;&amp; !this.isDead()) {
+                this.x += this.speed;
+                this.otherDirection = false;
+            }
+            if (this.world.keyboard.LEFT &amp;&amp; this.x > 0 &amp;&amp; !this.isAttacking &amp;&amp; !this.isDead()) {
+                this.x -= this.speed;
+                this.otherDirection = true;
+            }
+            if (this.world.keyboard.UP &amp;&amp; this.y > -80 &amp;&amp; !this.isAttacking &amp;&amp; !this.isDead()) {
+                this.y -= this.speed;
+            }
+            if (this.world.keyboard.DOWN &amp;&amp; 280 > this.y &amp;&amp; !this.isAttacking &amp;&amp; !this.isDead()) {
+                this.y += this.speed;
+            }
+            this.world.camera_x = -this.x + 150;
+        }, 1000 / 60);
+
+        // Sleep logic interval
+        this.setStoppableInterval(() => {
+            if (Date.now() - this.lastInputTime > 5000 &amp;&amp; !this.isSleeping) {
+                this.isSleeping = true;
+            }
+        }, 1000);
+
+        // Animation state interval
+        this.setStoppableInterval(() => {
+            if (this.isDead()) {
+                this.deadcharacter();
+            } else if (this.isSleeping) {
+                this.playAnimation(this.IMAGES_SLEEPING);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH);
+            } else if (this.isShocked()) {
+                this.playAnimation(this.IMAGES_HURT_BY_JELLYFISH);
+            } else if (!this.isAttacking &amp;&amp; (this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.LEFT || this.world.keyboard.DOWN)) {
+                this.playAnimation(this.IMAGES_SWIMMING_FORWARD);
+                if (world) world.playSoundWhileKey('swim', true);
+            } else if (!this.isAttacking) {
+                this.playAnimation(this.IMAGES_SWIMMING);
+            }
+        }, 150);
+
+        // Attack and bubble logic interval
+        this.setStoppableInterval(() => {
+            if (this.world.keyboard.SPACE &amp;&amp; !this.isAttacking) {
+                this.isAttacking = true;
+                this.characterAttackMove(this.IMAGES_FIN_SLAP);
+            }
+
+            if (this.world.keyboard.D &amp;&amp; !this.isAttacking &amp;&amp; !this.poisenBubble) {
+                this.isAttacking = true;
+                this.characterAttackMove(this.IMAGES_SHOOTING_BUBBLE);
+                this.world.playSound('bubble');
+                setTimeout(() => {
+                    this.world.checkShootingObjects();
+                }, 450);
+            }
+
+            if (this.world.keyboard.D &amp;&amp; !this.isAttacking &amp;&amp; this.poisenBubble) {
+                this.isAttacking = true;
+                this.characterAttackMove(this.IMAGES_SHOOTING_CHARCHED_BUBBLE);
+                setTimeout(() => {
+                    this.world.playSound('bubble');
+                    this.world.checkChargedBuuble();
+                }, 450);
+            }
+        }, 50);
+    }
+
+    /**
+     * Handles the death of Sharkie, plays death animation and sound, shows game over screen, and ends the game.
+     */
+    deadcharacter() {
+        this.world.playSoundOnce('death');
+        this.playOneTimeDeadAnimation(this.IMAGES_DEAD, 'img/1.Sharkie/6.dead/1.Poisoned/12.png');
+        this.dead();
+        displayGameOverScreen();
+        document.getElementById('pauseButtonContainer').style.display = 'none';
+        document.getElementById('touchOverlay').style.display = 'none';
+        this.world.sounds.music.pause();
+        this.world.sounds.music.currentTime = 0;
+        setTimeout(() => {
+            this.world.gameOver();
+        }, 2000);
+    }
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackroundObject.html">BackroundObject</a></li><li><a href="BlubbFish.html">BlubbFish</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="BubbleBar.html">BubbleBar</a></li><li><a href="Character.html">Character</a></li><li><a href="ChargedBubble.html">ChargedBubble</a></li><li><a href="Coin.html">Coin</a></li><li><a href="CoinBar.html">CoinBar</a></li><li><a href="CollectableObjects.html">CollectableObjects</a></li><li><a href="DrawableObject.html">DrawableObject</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="GodRays.html">GodRays</a></li><li><a href="JellyFish.html">JellyFish</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="MovableObject.html">MovableObject</a></li><li><a href="ShootableObject.html">ShootableObject</a></li><li><a href="StatusBar.html">StatusBar</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backHome">backHome</a></li><li><a href="global.html#closeLegalNoticeOverlay">closeLegalNoticeOverlay</a></li><li><a href="global.html#displayGameOverScreen">displayGameOverScreen</a></li><li><a href="global.html#displayTitleScreen">displayTitleScreen</a></li><li><a href="global.html#displayWinScreen">displayWinScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#level1">level1</a></li><li><a href="global.html#level2">level2</a></li><li><a href="global.html#openLegalNoticeOverlay">openLegalNoticeOverlay</a></li><li><a href="global.html#playStartSound">playStartSound</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setupControllerButton">setupControllerButton</a></li><li><a href="global.html#setupTouchControls">setupTouchControls</a></li><li><a href="global.html#showControls">showControls</a></li><li><a href="global.html#updateMuteState">updateMuteState</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jul 18 2025 15:16:46 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
