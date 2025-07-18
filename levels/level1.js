@@ -1,3 +1,13 @@
+/**
+ * @fileoverview Defines and initializes the levels for the Sharkie game.
+ * Level 1 and Level 2 are configured with their respective enemies, objects, backgrounds, and collectibles.
+ * @author Joshua Plischek
+ */
+
+/**
+ * Initializes Level 1 with its enemies, jellyfish, boss, god rays, backgrounds, and coins.
+ * Sets the global variable `level1`.
+ */
 let level1 
 function initLevelOne() {
     level1 = new Level(
@@ -70,6 +80,12 @@ function initLevelOne() {
     
     );
 }
+
+/**
+ * Level 2 configuration for demonstration or future use.
+ * Not initialized by default.
+ * @type {Level}
+ */
 
 const level2 = new Level(
     [

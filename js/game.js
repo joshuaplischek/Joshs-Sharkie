@@ -1,9 +1,18 @@
+/**
+ * @fileoverview Main game logic for Sharkie, including initialization, input handling,
+ * sound/mute state, pause/resume, overlays, and UI controls.
+ * @author Joshua Plischek
+ */
+
 let canvas;
 let world;
 let keyboard = new Keyboard;
 let isPaused = false;
 let isMuted = localStorage.getItem('isMuted') === 'true';
 
+/**
+ * Initializes the game, sets up the world, canvas, and resets end screens.
+ */
 function init() {
     initLevelOne();
     canvas = document.getElementById('canvas');
@@ -119,8 +128,12 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     setupTouchControls();
+    setupControllerButton();
 });
 
+/**
+ * Updates the mute state for all game sounds and updates the mute button icon.
+ */
 function updateMuteState() {
     if (world && world.sounds) {
         Object.values(world.sounds).forEach(audio => {
@@ -134,20 +147,10 @@ function updateMuteState() {
     }
 }
 
-// function displayGameOverScreen() {
-//     document.getElementById('looseEndScreen').classList.add('active');
-//     document.getElementById('pauseButtonContainer').style.display = 'none';
-//     document.getElementById('touchOverlay').style.display = 'none';
 
-// }
-
-// function displayWinScreen() {
-//     document.getElementById('winEndScreen').classList.add('active');
-//     document.getElementById('pauseButtonContainer').style.display = 'none';
-//     document.getElementById('touchOverlay').style.display = 'none';
-
-// }
-
+/**
+ * Restarts the game by clearing the canvas, intervals, and re-initializing.
+ */
 function restartGame() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
@@ -161,6 +164,9 @@ function restartGame() {
 
 }
 
+/**
+ * Main game loop for collision checks and frame updates.
+ */
 function run() {
     setInterval(() => {
         if (this.gameIsOver || window.isPaused) return;
@@ -171,6 +177,9 @@ function run() {
     }, 200);
 }
 
+/**
+ * Shows the controls overlay and hides it on click.
+ */
 function showControls() {
     const overlay = document.getElementById('controlsOverlay');
     overlay.style.display = 'flex';
@@ -179,6 +188,9 @@ function showControls() {
     };
 }
 
+/**
+ * Sets up touch controls for mobile devices and wakes up the character on input.
+ */
 function setupTouchControls() {
   function wakeUpCharacter() {
     if (world && world.character) {
@@ -224,22 +236,42 @@ function setupTouchControls() {
   document.getElementById('touchBubble').addEventListener('touchend', () => keyboard.D = false);
 }
 
+/**
+ * Sets up the controller button to toggle the touch overlay.
+ */
+function setupControllerButton() {
+    const controllerBtn = document.getElementById('controllerButton');
+    const touchOverlay = document.getElementById('touchOverlay');
+    controllerBtn.addEventListener('click', () => {
+        if (touchOverlay.style.display === 'none' || touchOverlay.style.display === '') {
+            touchOverlay.style.display = 'block';
+        } else {
+            touchOverlay.style.display = 'none';
+        }
+    });
+}
+
+/**
+ * Opens the legal notice overlay.
+ */
 function openLegalNoticeOverlay() {
   document.getElementById('legalNoticeOverlay').style.display = 'flex';
 }
 
+/**
+ * Closes the legal notice overlay.
+ */
 function closeLegalNoticeOverlay() {
   document.getElementById('legalNoticeOverlay').style.display = 'none';
 }
 
+/**
+ * Returns to the home/title screen, hides end screens and canvas, and shows the pause button.
+ */
 function backHome() {
-    // Endscreens ausblenden
     document.getElementById('winEndScreen').classList.remove('active');
     document.getElementById('looseEndScreen').classList.remove('active');
-    // Title-Screen anzeigen
     document.getElementById('titleScreen').style.display = 'block';
-    // Canvas ausblenden
     document.getElementById('divCanvas').style.display = 'none';
-    // Pause-Button wieder sichtbar machen
     document.getElementById('pauseButtonContainer').style.display = 'flex';
 }

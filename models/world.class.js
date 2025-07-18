@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Defines the World class, representing the main game world for Sharkie.
+ * Handles game state, drawing, sound, collision detection, collectibles, and game loop logic.
+ * @author Joshua Plischek
+ */
+
+/**
+ * Represents the main game world for Sharkie.
+ */
 class World {
   character = new Character();
   blubbfish = new BlubbFish();
@@ -25,6 +34,11 @@ class World {
     music: new Audio('../sounds/backround-music.mp3'), // Hintergrundmusik
   };
 
+  /**
+   * Creates a new World instance, initializes game objects, spawns bottles, sets up the game loop, and starts music.
+   * @param {HTMLCanvasElement} canvas - The canvas element for rendering.
+   * @param {Keyboard} keyboard - The keyboard input handler.
+   */
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -42,6 +56,10 @@ class World {
     this.sounds.music.volume = 0.25; // Lautstärke auf 50%
   };
 
+  /**
+   * Plays a sound by name.
+   * @param {string} name - The key of the sound in the sounds object.
+   */
   playSound(name) {
     if (this.sounds[name]) {
       this.sounds[name].currentTime = 0;
@@ -49,6 +67,10 @@ class World {
     }
   }
 
+  /**
+   * Plays a sound only if it is not already playing.
+   * @param {string} name - The key of the sound in the sounds object.
+   */
   playSoundOnce(name) {
     const sound = this.sounds[name];
     if (sound && sound.paused) {
@@ -57,6 +79,11 @@ class World {
     }
   }
 
+  /**
+   * Plays or stops a sound in a loop while a key is pressed.
+   * @param {string} name - The key of the sound in the sounds object.
+   * @param {boolean} isPressed - Whether the key is pressed.
+   */
   playSoundWhileKey(name, isPressed) {
     const sound = this.sounds[name];
     if (!sound) return;
@@ -73,10 +100,16 @@ class World {
     }
   }
 
+  /**
+   * Spawns bottles at random positions in the world.
+   */
   spawnBottles() {
     CollectableObjects.generateRandomCollectables(this.bottles, Bottle, 10, 360, 150);
   }
 
+  /**
+   * Checks and refills bottles if none are left.
+   */
   checkAndRefill() {
     setInterval(() => {
       if (this.bottles.length <= 0) {
@@ -85,6 +118,9 @@ class World {
     }, 1000);
   }
 
+  /**
+   * Sets references to the world for all major game objects.
+   */
   setWorld() {
     this.character.world = this;
     this.blubbfish.world = this;
@@ -92,6 +128,9 @@ class World {
     this.jelly.world = this;
   };
 
+  /**
+   * Starts the main collision detection loop.
+   */
   run() {
     setInterval(() => {
       if (this.gameIsOver) return;
@@ -102,6 +141,9 @@ class World {
     }, 200);
   };
 
+  /**
+   * Handles shooting of normal bubbles.
+   */
   checkShootingObjects() {
     let offsetX = this.character.otherDirection ? 10 : 140;
     let bubble = new ShootableObject(this.character.x + offsetX, this.character.y + 100);
@@ -110,6 +152,9 @@ class World {
     this.shootableObjects.push(bubble)
   };
 
+  /**
+   * Handles shooting of charged (poisoned) bubbles.
+   */
   checkChargedBuuble() {
     if (this.character.poisenBubble) {
       let offsetX = this.character.otherDirection ? 10 : 140;
@@ -121,6 +166,9 @@ class World {
     }
   };
 
+  /**
+   * Connects the character to enemy references.
+   */
   connectCharactertoEnemies() {
     this.level.enemies.forEach((enemy) => {
       if (enemy instanceof Endboss) {
@@ -129,11 +177,17 @@ class World {
     });
   };
 
+  /**
+   * Checks collisions between the character and BlubbFish enemies.
+   */
   checkCollisionsBlubbfish() {
     this.checkCharacterEnemyCollisions();
     this.checkBubbleEnemyCollisions();
   }
 
+  /**
+   * Checks collisions between the character and all enemies.
+   */
   checkCharacterEnemyCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isAttacking && this.character.isColliding(enemy)) {
@@ -147,6 +201,9 @@ class World {
     });
   }
 
+  /**
+   * Checks collisions between bubbles and enemies.
+   */
   checkBubbleEnemyCollisions() {
     this.shootableObjects.forEach((bubble, bubbleIndex) => {
       this.level.enemies.forEach((enemy, enemyIndex) => {
@@ -159,11 +216,17 @@ class World {
     });
   }
 
+  /**
+   * Checks collisions between the character and jellyfish.
+   */
   checkCollisionsJellyFish() {
     this.checkCharacterJellyFishCollisions();
     this.checkBubbleJellyFishCollisions();
   }
 
+  /**
+   * Checks collisions between the character and jellyfish.
+   */
   checkCharacterJellyFishCollisions() {
     this.level.jellys.forEach((jelly) => {
       if (!jelly.isDefeated() && this.character.isColliding(jelly)) {
@@ -174,6 +237,9 @@ class World {
     });
   }
 
+  /**
+   * Checks collisions between bubbles and jellyfish.
+   */
   checkBubbleJellyFishCollisions() {
     this.shootableObjects.forEach((bubble, bubbleIndex) => {
       this.level.jellys.forEach((jelly, jellyIndex) => {
@@ -185,11 +251,17 @@ class World {
     });
   }
 
+  /**
+   * Checks collisions with the endboss.
+   */
   checkCollisionsEndboss() {
     this.checkChargedBubbleEndbossCollisions();
     this.checkCharacterEndBossCollisions();
   }
 
+  /**
+   * Checks collisions between charged bubbles and the endboss.
+   */
   checkChargedBubbleEndbossCollisions() {
     this.shootableObjects.forEach((bubble, bubbleIndex) => {
       this.level.boss.forEach((boss) => {
@@ -201,6 +273,9 @@ class World {
     });
   }
 
+  /**
+   * Checks collisions between the character and the endboss.
+   */
   checkCharacterEndBossCollisions() {
     this.level.boss.forEach((boss) => {
       if (this.character.isColliding(boss)) {
@@ -211,6 +286,9 @@ class World {
     });
   }
 
+  /**
+   * Checks and handles coin collection.
+   */
   checkCollectCoin() {
     if (!this.collectedCoins) this.collectedCoins = 0;
 
@@ -231,6 +309,9 @@ class World {
     }
   }
 
+  /**
+   * Draws all game objects and UI elements to the canvas.
+   */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
@@ -266,6 +347,9 @@ class World {
     });
   };
 
+  /**
+   * Checks and handles bottle collection.
+   */
   checkCollectBottle() {
     if (this.bubbleBar.percentage >= 100) {
       this.character.poisenBubble = true;
@@ -284,6 +368,10 @@ class World {
     });
   }
 
+  /**
+   * Adds an array of objects to the map (canvas).
+   * @param {DrawableObject[]} objects - The objects to add.
+   */
   addObjectsToMap(objects) {
     if (!objects) return;
     objects.forEach((o) => {
@@ -291,6 +379,10 @@ class World {
     });
   };
 
+  /**
+   * Adds a single object to the map (canvas).
+   * @param {DrawableObject} mo - The object to add.
+   */
   addToMap(mo) {
     if (mo.otherDirection) {
       this.flipImage(mo)
@@ -301,6 +393,10 @@ class World {
       this.flipImageBack(mo);
     };
   };
+  /**
+   * Flips the image horizontally for mirrored drawing.
+   * @param {DrawableObject} mo - The object to flip.
+   */
   flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);
@@ -308,11 +404,18 @@ class World {
     mo.x = mo.x * -1;
   };
 
+  /**
+   * Restores the image orientation after flipping.
+   * @param {DrawableObject} mo - The object to restore.
+   */
   flipImageBack(mo) {
     this.ctx.restore();
     mo.x = mo.x * -1;
   };
 
+  /**
+   * Ends the game and clears all intervals.
+   */
   gameOver() {
     this.character.clearAllIntervals();
     this.level.jellys.forEach(jelly => jelly.clearAllIntervals && jelly.clearAllIntervals());
@@ -320,6 +423,9 @@ class World {
     this.level.boss.forEach(boss => boss.clearAllIntervals && boss.clearAllIntervals());
   }
 
+  /**
+   * Pauses the game and clears all intervals.
+   */
   pauseGame() {
     this.character.clearAllIntervals();
     this.level.enemies.forEach(enemy => enemy.clearAllIntervals && enemy.clearAllIntervals());
@@ -329,6 +435,9 @@ class World {
     this.shootableObjects.forEach(obj => obj.clearAllIntervals && obj.clearAllIntervals());
   }
 
+  /**
+   * Resumes the game and restarts all animations.
+   */
   resumeGame() {
     this.character.animate();
     this.level.enemies.forEach(enemy => enemy.animate && enemy.animate());

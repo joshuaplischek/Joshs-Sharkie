@@ -1,10 +1,50 @@
+/**
+ * @fileoverview Defines the Character class, representing the player character Sharkie.
+ * Handles movement, animation, attack logic, death, and interaction with the game world.
+ * @author Joshua Plischek
+ */
+
+/**
+ * Represents the player character Sharkie in the game world.
+ * Inherits from MovableObject.
+ */
 class Character extends MovableObject {
+    /**
+     * The width of Sharkie.
+     * @type {number}
+     */
     width = 200;
+
+    /**
+     * The height of Sharkie.
+     * @type {number}
+     */
     height = 200;
+
+    /**
+     * The vertical position of Sharkie.
+     * @type {number}
+     */
     y = 150;
-    speed = 7
+
+    /**
+     * The movement speed of Sharkie.
+     * @type {number}
+     */
+    speed = 7;
+
+    /**
+     * Timestamp of the last input for sleep logic.
+     * @type {number}
+     */
     lastInputTime = Date.now();
+
+    /**
+     * Indicates if Sharkie is currently sleeping.
+     * @type {boolean}
+     */
     isSleeping = false;
+
     IMAGES_SWIMMING = [
         'img/1.Sharkie/1.IDLE/1.png',
         'img/1.Sharkie/1.IDLE/2.png',
@@ -114,28 +154,39 @@ class Character extends MovableObject {
         'img/1.Sharkie/2.Long_IDLE/I14.png',
     ];
 
+    /**
+     * Reference to the game world.
+     * @type {World}
+     */
     world;
 
+    /**
+     * Creates a new Character instance, loads images, and sets up offsets.
+     */
     constructor() {
         super().loadImage('img/1.Sharkie/1.IDLE/1.png');
         this.loadImages(this.IMAGES_SWIMMING);
-        this.loadImages(this.IMAGES_SWIMMING_FORWARD)
-        this.loadImages(this.IMAGES_HURT_BY_JELLYFISH)
-        this.loadImages(this.IMAGES_HURT_BY_BLUBBFISH)
-        this.loadImages(this.IMAGES_SHOOTING_BUBBLE)
-        this.loadImages(this.IMAGES_FIN_SLAP)
-        this.loadImages(this.IMAGES_DEAD)
-        this.loadImages(this.IMAGES_SHOOTING_CHARCHED_BUBBLE)
-        this.loadImages(this.IMAGES_SLEEPING)
+        this.loadImages(this.IMAGES_SWIMMING_FORWARD);
+        this.loadImages(this.IMAGES_HURT_BY_JELLYFISH);
+        this.loadImages(this.IMAGES_HURT_BY_BLUBBFISH);
+        this.loadImages(this.IMAGES_SHOOTING_BUBBLE);
+        this.loadImages(this.IMAGES_FIN_SLAP);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_SHOOTING_CHARCHED_BUBBLE);
+        this.loadImages(this.IMAGES_SLEEPING);
         this.offset = {
             top: 90,
             right: 35,
             bottom: 40,
             left: 40,
         };
-    };
+    }
 
+    /**
+     * Starts all animation and movement intervals for Sharkie.
+     */
     animate() {
+        // Movement interval
         this.setStoppableInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.isAttacking && !this.isDead()) {
                 this.x += this.speed;
@@ -154,35 +205,37 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 150;
         }, 1000 / 60);
 
+        // Sleep logic interval
         this.setStoppableInterval(() => {
             if (Date.now() - this.lastInputTime > 5000 && !this.isSleeping) {
                 this.isSleeping = true;
             }
         }, 1000);
 
+        // Animation state interval
         this.setStoppableInterval(() => {
             if (this.isDead()) {
                 this.deadcharacter();
             } else if (this.isSleeping) {
                 this.playAnimation(this.IMAGES_SLEEPING);
             } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH)
+                this.playAnimation(this.IMAGES_HURT_BY_BLUBBFISH);
             } else if (this.isShocked()) {
-                this.playAnimation(this.IMAGES_HURT_BY_JELLYFISH)
-            } else if (!this.isAttacking && this.world.keyboard.RIGHT || !this.isAttacking && this.world.keyboard.UP || !this.isAttacking && this.world.keyboard.LEFT || !this.isAttacking && this.world.keyboard.DOWN) {
-                this.playAnimation(this.IMAGES_SWIMMING_FORWARD)
+                this.playAnimation(this.IMAGES_HURT_BY_JELLYFISH);
+            } else if (!this.isAttacking && (this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.LEFT || this.world.keyboard.DOWN)) {
+                this.playAnimation(this.IMAGES_SWIMMING_FORWARD);
                 if (world) world.playSoundWhileKey('swim', true);
-                // this.world.playSoundOnce('swim');
             } else if (!this.isAttacking) {
-                this.playAnimation(this.IMAGES_SWIMMING)
-            };
+                this.playAnimation(this.IMAGES_SWIMMING);
+            }
         }, 150);
 
+        // Attack and bubble logic interval
         this.setStoppableInterval(() => {
             if (this.world.keyboard.SPACE && !this.isAttacking) {
                 this.isAttacking = true;
                 this.characterAttackMove(this.IMAGES_FIN_SLAP);
-            };
+            }
 
             if (this.world.keyboard.D && !this.isAttacking && !this.poisenBubble) {
                 this.isAttacking = true;
@@ -191,7 +244,7 @@ class Character extends MovableObject {
                 setTimeout(() => {
                     this.world.checkShootingObjects();
                 }, 450);
-            };
+            }
 
             if (this.world.keyboard.D && !this.isAttacking && this.poisenBubble) {
                 this.isAttacking = true;
@@ -200,13 +253,16 @@ class Character extends MovableObject {
                     this.world.playSound('bubble');
                     this.world.checkChargedBuuble();
                 }, 450);
-            };
+            }
         }, 50);
-    };
+    }
 
+    /**
+     * Handles the death of Sharkie, plays death animation and sound, shows game over screen, and ends the game.
+     */
     deadcharacter() {
         this.world.playSoundOnce('death');
-        this.playOneTimeDeadAnimation(this.IMAGES_DEAD, 'img/1.Sharkie/6.dead/1.Poisoned/12.png')
+        this.playOneTimeDeadAnimation(this.IMAGES_DEAD, 'img/1.Sharkie/6.dead/1.Poisoned/12.png');
         this.dead();
         displayGameOverScreen();
         document.getElementById('pauseButtonContainer').style.display = 'none';
