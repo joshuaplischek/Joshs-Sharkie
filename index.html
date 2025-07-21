@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de" translate="no">
   <head>
     <meta charset="UTF-8" />
@@ -47,20 +47,28 @@
           src="img/6.Botones/pause-button-removebg-preview.png"
           alt="pause button image"
         />
-        <img id="controllerButton" src="./img/6.Botones/controller-1784571_640.png" alt="">
+        <img
+          id="controllerButton"
+          src="./img/6.Botones/controller-1784571_640.png"
+          alt=""
+        />
       </div>
       <div id="pauseOverlay">
-        <div>
-          <img
-            id="muteButton"
-            src="img/6.Botones/sound-on-removebg-preview.png"
-            alt="button to mute"
-          />
+        <div class="pause-overlay-content">
+          <div>
+            <img
+              id="muteButton"
+              src="img/6.Botones/sound-on-removebg-preview.png"
+              alt="button to mute"
+            />
+          </div>
+          <p>PAUSE</p>
+          <div id="controls" onclick="showControls()">Controls</div>
+          <p class="legal-notice" onclick="openLegalNoticeOverlay()">
+            Legal Notice
+          </p>
+          <img id="resumeButton" src="img/6.Botones/Start/2.png" alt="" />
         </div>
-        <p>PAUSE</p>
-        <div id="controls" onclick="showControls()">Controls</div>
-        <p class="legal-notice" onclick="openLegalNoticeOverlay()">Legal Notice</p>
-        <img id="resumeButton" src="img/6.Botones/Start/2.png" alt="" />
       </div>
       <canvas id="canvas" width="720px" height="480px"></canvas>
       <div id="touchOverlay">
@@ -95,7 +103,13 @@
         </div>
         <!-- Controls-Button -->
         <div id="controls" onclick="showControls()">Controls</div>
-              <p id="startScreenLegalNotice" class="legal-notice" onclick="openLegalNoticeOverlay()">Legal Notice</p>
+        <p
+          id="startScreenLegalNotice"
+          class="legal-notice"
+          onclick="openLegalNoticeOverlay()"
+        >
+          Legal Notice
+        </p>
       </div>
     </div>
     <!-- Controls-Overlay -->
@@ -117,17 +131,28 @@
           <p class="coins-Introduction">collect coins for extra health!!</p>
         </div>
         <p class="controls-hint">Click anywhere to close the overlay.</p>
- 
       </div>
-      
     </div>
     <div id="looseEndScreen">
-      <div class="home-button-container"><img id="homeButton" src="./img/6.Botones/home-button.png" onclick="backHome()" alt=""></div>
+      <div class="home-button-container">
+        <img
+          id="homeButton"
+          src="./img/6.Botones/home-button.png"
+          onclick="backHome()"
+          alt=""
+        />
+      </div>
       <div id="deadSharkie">
-        <img src="./img/1.Sharkie/6.dead/1.Poisoned/12.png" alt="image of dead sharkie" />
+        <img
+          src="./img/1.Sharkie/6.dead/1.Poisoned/12.png"
+          alt="image of dead sharkie"
+        />
       </div>
       <div id="gameOverLine">
-        <img src="./img/6.Botones/Tittles/Game Over/Recurso 12.png" alt="home button" />
+        <img
+          src="./img/6.Botones/Tittles/Game Over/Recurso 12.png"
+          alt="home button"
+        />
       </div>
       <div id="tryAgainLoose">
         <img
@@ -140,7 +165,14 @@
       </div>
     </div>
     <div id="winEndScreen">
-      <div class="home-button-container"><img id="homeButtonWin" src="./img/6.Botones/home-button.png" onclick="backHome()" alt="home button"></div>
+      <div class="home-button-container">
+        <img
+          id="homeButtonWin"
+          src="./img/6.Botones/home-button.png"
+          onclick="backHome()"
+          alt="home button"
+        />
+      </div>
       <div id="tryAgainWin">
         <img
           id="tryAgainWinImg"
@@ -153,69 +185,82 @@
     </div>
     <div id="legalNoticeOverlay" class="legal-notice-overlay">
       <div class="legal-notice-content">
-  <h1>Legal Notice / Site Notice</h1>
+        <h1>Legal Notice / Site Notice</h1>
 
-  <h2>Information according to § 5 TMG</h2>
-  <p>
-    <strong>Sharkie – A project by</strong><br>
-    Joshua Plischek<br>
-    Raiffeisenstr. 10A<br>
-    57610 Altenkirchen<br>
-    Germany
-  </p>
+        <h2>Information according to § 5 TMG</h2>
+        <p>
+          <strong>Sharkie – A project by</strong><br />
+          Joshua Plischek<br />
+          Raiffeisenstr. 10A<br />
+          57610 Altenkirchen<br />
+          Germany
+        </p>
 
-  <h2>Contact</h2>
-  <p>
-    Email: <a href="mailto:developer@joshuaplischek.de">developer@joshuaplischek.de</a><br>
-  </p>
+        <h2>Contact</h2>
+        <p>
+          Email:
+          <a href="mailto:developer@joshuaplischek.de"
+            >developer@joshuaplischek.de</a
+          ><br />
+        </p>
 
-  <h2>Responsible for content according to § 55 Abs. 2 RStV</h2>
-  <p>
-    Joshua Plischek<br>
-    Raiffeisenstr. 10A<br>
-    57610 Altenkirchen<br>
-    Germany
-  </p>
+        <h2>Responsible for content according to § 55 Abs. 2 RStV</h2>
+        <p>
+          Joshua Plischek<br />
+          Raiffeisenstr. 10A<br />
+          57610 Altenkirchen<br />
+          Germany
+        </p>
 
-  <h2>Disclaimer</h2>
+        <h2>Disclaimer</h2>
 
-  <h3>Liability for content</h3>
-  <p>
-    As a service provider, we are responsible for our own content on these pages in accordance with general laws (§ 7 Abs.1 TMG). 
-    However, according to §§ 8 to 10 TMG, we are not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.
-  </p>
-  <p>
-    Obligations to remove or block the use of information under general laws remain unaffected. 
-    However, liability in this regard is only possible from the time of knowledge of a specific infringement. 
-    Upon notification of such violations, we will remove this content immediately.
-  </p>
+        <h3>Liability for content</h3>
+        <p>
+          As a service provider, we are responsible for our own content on these
+          pages in accordance with general laws (§ 7 Abs.1 TMG). However,
+          according to §§ 8 to 10 TMG, we are not obligated to monitor
+          transmitted or stored third-party information or to investigate
+          circumstances that indicate illegal activity.
+        </p>
+        <p>
+          Obligations to remove or block the use of information under general
+          laws remain unaffected. However, liability in this regard is only
+          possible from the time of knowledge of a specific infringement. Upon
+          notification of such violations, we will remove this content
+          immediately.
+        </p>
 
-  <h3>Liability for links</h3>
-  <p>
-    Our site contains links to external websites over which we have no control. 
-    Therefore, we cannot accept any responsibility for their content. 
-    The respective provider or operator is always responsible for the content of the linked pages. 
-    The linked pages were checked for possible legal violations at the time of linking. 
-    Illegal content was not recognizable at that time.
-  </p>
-  <p>
-    A permanent content control of the linked pages is not reasonable without concrete evidence of an infringement. 
-    If we become aware of any violations, we will remove such links immediately.
-  </p>
+        <h3>Liability for links</h3>
+        <p>
+          Our site contains links to external websites over which we have no
+          control. Therefore, we cannot accept any responsibility for their
+          content. The respective provider or operator is always responsible for
+          the content of the linked pages. The linked pages were checked for
+          possible legal violations at the time of linking. Illegal content was
+          not recognizable at that time.
+        </p>
+        <p>
+          A permanent content control of the linked pages is not reasonable
+          without concrete evidence of an infringement. If we become aware of
+          any violations, we will remove such links immediately.
+        </p>
 
-  <h3>Copyright</h3>
-  <p>
-    The content and works created by the site operator on these pages are subject to German copyright law. 
-    Reproduction, editing, distribution, and any kind of use outside the limits of copyright law 
-    require the written consent of the respective author or creator. 
-    Downloads and copies of this site are only permitted for private, non-commercial use.
-  </p>
-  <p>
-    As far as content on this site was not created by the operator, the copyrights of third parties are respected. 
-    In particular, third-party content is marked as such. 
-    Should you nevertheless become aware of a copyright infringement, please inform us accordingly. 
-    Upon notification of violations, we will remove such content immediately.
-  </p>
+        <h3>Copyright</h3>
+        <p>
+          The content and works created by the site operator on these pages are
+          subject to German copyright law. Reproduction, editing, distribution,
+          and any kind of use outside the limits of copyright law require the
+          written consent of the respective author or creator. Downloads and
+          copies of this site are only permitted for private, non-commercial
+          use.
+        </p>
+        <p>
+          As far as content on this site was not created by the operator, the
+          copyrights of third parties are respected. In particular, third-party
+          content is marked as such. Should you nevertheless become aware of a
+          copyright infringement, please inform us accordingly. Upon
+          notification of violations, we will remove such content immediately.
+        </p>
         <button onclick="closeLegalNoticeOverlay()">Close</button>
       </div>
     </div>
