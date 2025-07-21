@@ -135,7 +135,7 @@ h1 {
   align-items: center;
   @media (max-height: 480px) {
     p{
-      margin: 0;
+      margin: 15px 0;
     }
   }
 }
@@ -188,7 +188,7 @@ h1 {
 }
 
 #touchOverlay {
-  display: none; /* Standardmäßig ausgeblendet */
+  display: none; 
   position: absolute;
   top: 0; left: 0;
   width: 100%;
