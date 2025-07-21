@@ -104,7 +104,7 @@
 .try-again-loose {
   pointer-events: none;
   opacity: 0;
-  visibility: hidden;  
+  visibility: hidden;
   transition: opacity 0.7s ease;
 }
 .try-again-loose.visible {
@@ -116,7 +116,7 @@
 .try-again-win {
   pointer-events: none;
   opacity: 0;
-  visibility: hidden;  
+  visibility: hidden;
   transition: opacity 0.7s ease;
 }
 .try-again-win.visible {
@@ -126,29 +126,52 @@
 }
 
 @media screen and (orientation: landscape) and (max-height: 720px) {
-    #looseEndScreen, #winEndScreen {
-      margin-top: 0;
-    }
+  #looseEndScreen,
+  #winEndScreen {
+    margin-top: 0;
+  }
 }
 
-#homeButton{
+#homeButton {
   opacity: 0;
-    position: absolute;
-    height: 50px;
-    right: 5%;
-    top: 12%;
-    transition: ease-in-out 0.3s;
+  position: absolute;
+  height: 50px;
+  right: 5%;
+  top: 12%;
+  transition: ease-in-out 0.3s;
 }
 
-#homeButton.visible{
+#homeButton.visible {
   opacity: 1;
-    position: absolute;
-    height: 50px;
-    right: 5%;
-    top: 12%;
+  position: absolute;
+  height: 50px;
+  right: 5%;
+  top: 12%;
 }
 
 #homeButton:hover {
+  cursor: pointer;
+  filter: contrast(0.5);
+}
+
+#homeButtonWin {
+  opacity: 0;
+  position: absolute;
+  height: 50px;
+  right: 5%;
+  top: 12%;
+  transition: ease-in-out 0.3s;
+}
+
+#homeButtonWin.visible {
+  opacity: 1;
+  position: absolute;
+  height: 50px;
+  right: 5%;
+  top: 12%;
+}
+
+#homeButtonWin:hover {
   cursor: pointer;
   filter: contrast(0.5);
 }

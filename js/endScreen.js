@@ -37,7 +37,7 @@ function displayWinScreen() {
         winScreen.classList.add('active');
         setTimeout(() => {
             document.getElementById('tryAgainWinImg').classList.add('visible');
-            document.getElementById('homeButton').classList.add('visible');
+            document.getElementById('homeButtonWin').classList.add('visible');
         }, 2500);
     }, 1500); 
 }

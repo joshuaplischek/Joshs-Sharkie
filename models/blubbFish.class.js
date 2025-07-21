@@ -152,5 +152,5 @@ class BlubbFish extends MovableObject {
         this.speed = -25;
         this.loadImage(this.IMAGES_DEAD_BLUBBFISCH)
     }
-    
+
 };
