@@ -175,17 +175,10 @@ class MovableObject extends DrawableObject {
      * @returns {boolean}
      */
     isColliding(mo) {
-        //funktioniert 
         return this.x + this.offset.left + this.width - this.offset.right - this.offset.left > mo.x + mo.offset.left &&
             this.y + this.offset.top + this.height - this.offset.top - this.offset.bottom > mo.y + mo.offset.top &&
             this.x + this.offset.left < mo.x + mo.offset.left + mo.width - mo.offset.left - mo.offset.right &&
             this.y + this.offset.top < mo.y + mo.offset.top + mo.height - mo.offset.top - mo.offset.bottom;
-
-        //funktioniert nicht
-        // return this.rX + this.rW > mo.rX &&
-        //     this.rY + this.rH > mo.rY &&
-        //     this.rX < mo.rX + mo.rW &&
-        //     this.rY < mo.rY + mo.rH;
     }
 
     /**

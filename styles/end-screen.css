@@ -175,3 +175,14 @@
   cursor: pointer;
   filter: contrast(0.5);
 }
+
+@media (max-height: 480px) {
+  #looseEndScreen {
+    justify-content: center;
+    gap: 25px;
+  }
+
+  #homeButton.visible{
+    top: 16%;
+  }
+}
